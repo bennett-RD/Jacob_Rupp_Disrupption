@@ -338,10 +338,10 @@
 
       <div class="inline-flex items-center gap-2 mb-7 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase font-heading" style="background:rgba(14,185,234,0.1); border:1px solid rgba(14,185,234,0.35); color:#0eb9ea;">
         <span class="w-1.5 h-1.5 rounded-full inline-block" style="background:#FFD600;"></span>
-        Coaching Business Growth Academy
+        DisRupption Academy
       </div>
 
-      <h1 class="font-heading font-extrabold leading-[1.05] mb-6 text-white" style="font-size: clamp(2.8rem, 7vw, 5.2rem);">
+      <h1 class="font-heading font-extrabold leading-[1.05] mb-6 text-white" style="font-size: clamp(1.9rem, 6vw, 5.2rem);">
         Build a Coaching<br />
         Business That<br />
         <span id="rotatingWord" class="rotating-word entering">Scales.</span>
@@ -367,7 +367,7 @@
         <span class="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold font-heading border" style="background:rgba(14,185,234,0.08); border-color:rgba(14,185,234,0.25); color:#0eb9ea;">
           <span class="w-1.5 h-1.5 rounded-full" style="background:#FFD600;"></span>Sales &amp; Clients
         </span>
-        <span class="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold font-heading border" style="background:rgba(14,185,234,0.08); border-color:rgba(14,185,234,0.25); color:#0eb9ea;">
+        <span class="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold font-heading border basis-full sm:basis-auto" style="background:rgba(14,185,234,0.08); border-color:rgba(14,185,234,0.25); color:#0eb9ea;">
           <span class="w-1.5 h-1.5 rounded-full" style="background:#FFD600;"></span>Delivery &amp; Results
         </span>
       </div>
@@ -623,73 +623,73 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
 
       <!-- Card 1: Private Coaching -->
-      <div class="prog-card-wrap">
+      <div class="prog-card-wrap" onclick="this.classList.toggle('flipped')">
         <div class="prog-card-inner">
           <div class="prog-face prog-front">
             <div class="font-heading font-extrabold leading-none mb-2" style="font-size:2.2rem; color:rgba(14,185,234,0.2);">1:1</div>
             <div class="text-xs font-bold tracking-[2px] uppercase mb-1 font-heading" style="color:#0eb9ea;">Private</div>
             <h4 class="font-heading font-bold text-white text-sm mb-2">Private Coaching</h4>
             <p class="text-xs font-body leading-relaxed" style="color:rgba(248,248,246,0.65);">Direct 1:1 support for clarity and accountability to move fast.</p>
-            <div class="prog-hint">Hover to learn more</div>
+            <div class="prog-hint">Tap or hover to flip</div>
           </div>
           <div class="prog-face prog-back">
             <div class="mb-2" style="font-size:1.6rem; line-height:1;">🎯</div>
             <p class="text-xs font-body leading-relaxed mb-3" style="color:rgba(248,248,246,0.9);">Weekly 1:1 sessions with Jacob — custom strategy, real accountability, and direct feedback that keeps you moving.</p>
-            <a href="#contact" class="yellow-btn text-xs font-bold font-heading px-3 py-1.5 rounded-lg" style="background:#0eb9ea; color:#fff; text-decoration:none; display:inline-block;">Apply Now &rarr;</a>
+            <a href="#contact" class="yellow-btn text-xs font-bold font-heading px-3 py-1.5 rounded-lg" onclick="event.stopPropagation()" style="background:#0eb9ea; color:#fff; text-decoration:none; display:inline-block;">Apply Now &rarr;</a>
           </div>
         </div>
       </div>
 
       <!-- Card 2: Group Program -->
-      <div class="prog-card-wrap">
+      <div class="prog-card-wrap" onclick="this.classList.toggle('flipped')">
         <div class="prog-card-inner">
           <div class="prog-face prog-front">
             <div class="font-heading font-extrabold leading-none mb-2" style="font-size:2.2rem; color:rgba(255,214,0,0.2);">GP</div>
             <div class="text-xs font-bold tracking-[2px] uppercase mb-1 font-heading" style="color:#FFD600;">Group</div>
             <h4 class="font-heading font-bold text-white text-sm mb-2">Group Program</h4>
             <p class="text-xs font-body leading-relaxed" style="color:rgba(248,248,246,0.65);">Live group coaching calls for implementation, hot seats, and shared momentum.</p>
-            <div class="prog-hint" style="color:rgba(255,214,0,0.5);">Hover to learn more</div>
+            <div class="prog-hint" style="color:rgba(255,214,0,0.5);">Tap or hover to flip</div>
           </div>
           <div class="prog-face prog-back" style="background:rgba(255,214,0,0.1); border-color:rgba(255,214,0,0.3);">
             <div class="mb-2" style="font-size:1.6rem; line-height:1;">👥</div>
             <p class="text-xs font-body leading-relaxed mb-3" style="color:rgba(248,248,246,0.9);">Weekly live sessions with a cohort of coaches. Hot seats, peer accountability, and real-time problem solving.</p>
-            <a href="#contact" class="teal-btn text-xs font-bold font-heading px-3 py-1.5 rounded-lg" style="background:#FFD600; color:#111; text-decoration:none; display:inline-block;">Apply Now &rarr;</a>
+            <a href="#contact" class="teal-btn text-xs font-bold font-heading px-3 py-1.5 rounded-lg" onclick="event.stopPropagation()" style="background:#FFD600; color:#111; text-decoration:none; display:inline-block;">Apply Now &rarr;</a>
           </div>
         </div>
       </div>
 
       <!-- Card 3: Proven Frameworks -->
-      <div class="prog-card-wrap">
+      <div class="prog-card-wrap" onclick="this.classList.toggle('flipped')">
         <div class="prog-card-inner">
           <div class="prog-face prog-front">
             <div class="font-heading font-extrabold leading-none mb-2" style="font-size:2.2rem; color:rgba(14,185,234,0.2);">FW</div>
             <div class="text-xs font-bold tracking-[2px] uppercase mb-1 font-heading" style="color:#0eb9ea;">Frameworks</div>
             <h4 class="font-heading font-bold text-white text-sm mb-2">Proven Frameworks</h4>
             <p class="text-xs font-body leading-relaxed" style="color:rgba(248,248,246,0.65);">Step-by-step systems for sales, messaging, delivery, and scaling.</p>
-            <div class="prog-hint">Hover to learn more</div>
+            <div class="prog-hint">Tap or hover to flip</div>
           </div>
           <div class="prog-face prog-back">
             <div class="mb-2" style="font-size:1.6rem; line-height:1;">📋</div>
             <p class="text-xs font-body leading-relaxed mb-3" style="color:rgba(248,248,246,0.9);">Battle-tested playbooks for enrollment, onboarding, offer positioning, and delivery — no guesswork required.</p>
-            <a href="#contact" class="yellow-btn text-xs font-bold font-heading px-3 py-1.5 rounded-lg" style="background:#0eb9ea; color:#fff; text-decoration:none; display:inline-block;">Apply Now &rarr;</a>
+            <a href="#contact" class="yellow-btn text-xs font-bold font-heading px-3 py-1.5 rounded-lg" onclick="event.stopPropagation()" style="background:#0eb9ea; color:#fff; text-decoration:none; display:inline-block;">Apply Now &rarr;</a>
           </div>
         </div>
       </div>
 
       <!-- Card 4: Community -->
-      <div class="prog-card-wrap">
+      <div class="prog-card-wrap" onclick="this.classList.toggle('flipped')">
         <div class="prog-card-inner">
           <div class="prog-face prog-front">
             <div class="font-heading font-extrabold leading-none mb-2" style="font-size:2.2rem; color:rgba(255,214,0,0.2);">&#8734;</div>
             <div class="text-xs font-bold tracking-[2px] uppercase mb-1 font-heading" style="color:#FFD600;">Network</div>
             <h4 class="font-heading font-bold text-white text-sm mb-2">Community</h4>
             <p class="text-xs font-body leading-relaxed" style="color:rgba(248,248,246,0.65);">A peer group who challenge, support, and celebrate each other's wins.</p>
-            <div class="prog-hint" style="color:rgba(255,214,0,0.5);">Hover to learn more</div>
+            <div class="prog-hint" style="color:rgba(255,214,0,0.5);">Tap or hover to flip</div>
           </div>
           <div class="prog-face prog-back" style="background:rgba(255,214,0,0.1); border-color:rgba(255,214,0,0.3);">
             <div class="mb-2" style="font-size:1.6rem; line-height:1;">🌐</div>
             <p class="text-xs font-body leading-relaxed mb-3" style="color:rgba(248,248,246,0.9);">Join coaches building real businesses who refuse to play small. The relationships you build here outlast the program.</p>
-            <a href="#contact" class="teal-btn text-xs font-bold font-heading px-3 py-1.5 rounded-lg" style="background:#FFD600; color:#111; text-decoration:none; display:inline-block;">Apply Now &rarr;</a>
+            <a href="#contact" class="teal-btn text-xs font-bold font-heading px-3 py-1.5 rounded-lg" onclick="event.stopPropagation()" style="background:#FFD600; color:#111; text-decoration:none; display:inline-block;">Apply Now &rarr;</a>
           </div>
         </div>
       </div>
