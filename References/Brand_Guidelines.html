@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CWB Brand Guidelines</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --lime:  #C3D350;
+      --sky:   #BFDDDF;
+      --teal:  #007EA7;
+      --navy:  #003459;
+      --dark:  #1C1C1C;
+      --white: #FFFFFF;
+      --off:   #F5F7F8;
+      --mid:   #E4E9EB;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #d8d8d8;
+    }
+
+    .print-bar {
+      background: var(--navy);
+      text-align: center;
+      padding: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .print-bar p { color: var(--sky); font-size: .8rem; display: inline; margin-right: 1rem; }
+
+    .print-btn {
+      background: var(--lime);
+      color: var(--navy);
+      border: none;
+      padding: .45rem 1.4rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: .8rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* ── SHEET ── */
+    .sheet {
+      width: 1020px;
+      background: var(--white);
+      margin: 28px auto;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      grid-template-rows: auto;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18);
+    }
+
+    /* ── LEFT SIDEBAR ── */
+    .sidebar {
+      background: var(--navy);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .sidebar-brand { }
+
+    .monogram {
+      width: 52px; height: 52px;
+      background: var(--lime);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 14px;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .brand-name span { color: var(--lime); }
+
+    .brand-role {
+      font-size: .72rem;
+      color: var(--sky);
+      font-weight: 500;
+      letter-spacing: .5px;
+      opacity: .75;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: rgba(255,255,255,.1);
+    }
+
+    .sidebar-section-label {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+
+    /* Taglines */
+    .tagline-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .tagline-item {
+      padding-left: 12px;
+      border-left: 2px solid var(--lime);
+    }
+
+    .tagline-item p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: .78rem;
+      color: var(--sky);
+      line-height: 1.5;
+    }
+
+    /* Tone pills */
+    .tone-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .tone-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .78rem;
+      color: var(--sky);
+      font-weight: 500;
+    }
+
+    .tone-dot {
+      width: 6px; height: 6px;
+      background: var(--lime);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Contact */
+    .contact-block { margin-top: auto; }
+
+    .contact-line {
+      font-size: .75rem;
+      color: rgba(255,255,255,.45);
+      margin-bottom: 4px;
+    }
+
+    .contact-line a, .contact-line span {
+      color: var(--sky);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .year-line {
+      font-size: .65rem;
+      color: rgba(255,255,255,.2);
+      margin-top: 8px;
+    }
+
+    /* ── RIGHT MAIN ── */
+    .main {
+      padding: 36px 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .main-title {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #bbb;
+      border-bottom: 1px solid var(--mid);
+      padding-bottom: 10px;
+    }
+
+    .block-label {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+
+    /* ── COLORS ── */
+    .colors-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-radius: 8px;
+      overflow: hidden;
+      height: 64px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    }
+
+    .color-cards {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .color-card {
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--mid);
+    }
+
+    .color-swatch { height: 44px; }
+
+    .color-info {
+      padding: 8px 8px 10px;
+      background: var(--white);
+    }
+
+    .color-name { font-size: .7rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .color-hex  { font-size: .68rem; font-family: 'Courier New', monospace; color: var(--teal); font-weight: 600; margin-bottom: 2px; }
+    .color-rgb  { font-size: .62rem; color: #aaa; font-family: 'Courier New', monospace; }
+    .color-use  { font-size: .65rem; color: #888; margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--mid); line-height: 1.4; }
+
+    /* ── TYPOGRAPHY ── */
+    .type-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .type-block {
+      background: var(--off);
+      border-radius: 6px;
+      padding: 16px 18px;
+    }
+
+    .type-block-meta {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .type-block-name { font-size: .78rem; font-weight: 700; color: var(--navy); }
+    .type-block-role { font-size: .65rem; color: var(--teal); font-weight: 600; }
+
+    .type-sample-serif {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .type-sample-serif em { font-style: italic; color: var(--teal); }
+
+    .type-sample-sans {
+      font-size: .82rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .type-weights { font-size: .65rem; color: #999; margin-top: 6px; }
+
+    .type-scale-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--mid);
+    }
+
+    .type-scale-row:last-child { border-bottom: none; }
+    .ts-label { font-size: .62rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #bbb; width: 72px; flex-shrink: 0; }
+    .ts-size  { font-size: .62rem; color: #ccc; width: 44px; flex-shrink: 0; font-family: monospace; }
+
+    /* ── DO / DON'T ── */
+    .rules-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .do-box, .dont-box {
+      border-radius: 6px;
+      padding: 14px 16px;
+    }
+
+    .do-box   { background: rgba(195,211,80,.07); border: 1px solid rgba(195,211,80,.4); }
+    .dont-box { background: rgba(180,60,60,.04);  border: 1px solid rgba(180,60,60,.2); }
+
+    .rules-title {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .do-box   .rules-title { color: #7a8f1a; }
+    .dont-box .rules-title { color: #b05050; }
+
+    .rules-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+    .rules-list li {
+      font-size: .75rem;
+      color: #444;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.45;
+    }
+
+    .do-box   li::before { content: '✓'; position: absolute; left: 0; color: #8fa020; font-weight: 700; }
+    .dont-box li::before { content: '✕'; position: absolute; left: 0; color: #b05050; font-weight: 700; }
+
+    /* ── LOGO VARIANTS ── */
+    .logo-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .logo-box {
+      border-radius: 6px;
+      padding: 18px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-light { background: var(--off); border: 1px solid var(--mid); }
+    .logo-dark  { background: var(--navy); }
+    .logo-teal  { background: var(--teal); }
+
+    .logo-mark {
+      width: 38px; height: 38px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .logo-light .logo-mark { background: var(--navy); color: var(--lime); }
+    .logo-dark  .logo-mark { background: var(--lime); color: var(--navy); }
+    .logo-teal  .logo-mark { background: var(--white); color: var(--navy); }
+
+    .logo-wm {
+      font-family: 'Playfair Display', serif;
+      font-size: .72rem;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .logo-light .logo-wm { color: var(--navy); }
+    .logo-dark  .logo-wm { color: var(--white); }
+    .logo-teal  .logo-wm { color: var(--white); }
+
+    .logo-wm span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: .58rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: .5;
+      margin-top: 1px;
+    }
+
+    .logo-caption {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .logo-light .logo-caption { color: #aaa; }
+    .logo-dark  .logo-caption { color: rgba(255,255,255,.4); }
+    .logo-teal  .logo-caption { color: rgba(255,255,255,.5); }
+
+    @media print {
+      body { background: white; }
+      .print-bar { display: none; }
+      .sheet { margin: 0; box-shadow: none; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-bar">
+    <p>Open in Chrome → Ctrl+P → Save as PDF</p>
+    <button class="print-btn" onclick="window.print()">Save as PDF</button>
+  </div>
+
+  <div class="sheet">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-brand">
+        <div class="monogram">CWB</div>
+        <div class="brand-name">Coaching<br />With <span>Bennett</span></div>
+        <div class="brand-role">High Performance Executive Coach</div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div>
+        <div class="sidebar-section-label">Core Taglines</div>
+        <div class="tagline-list">
+          <div class="tagline-item">
+            <p>"Maximizing your resources in order to live the life you truly desire."</p>
+          </div>
+          <div class="tagline-item">
+            <p>"Helping people unlock their greatness by re-programming their beliefs."</p>
+          </div>
+          <div class="tagline-item">
+            <p>"Unlock Your Greatness. Live the Life You Desire."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div>
+        <div class="sidebar-section-label">Brand Voice</div>
+        <div class="tone-list">
+          <div class="tone-pill"><div class="tone-dot"></div> Empowering</div>
+          <div class="tone-pill"><div class="tone-dot"></div> Direct & Clear</div>
+          <div class="tone-pill"><div class="tone-dot"></div> Results-Focused</div>
+          <div class="tone-pill"><div class="tone-dot"></div> Warm & Human</div>
+          <div class="tone-pill"><div class="tone-dot"></div> Strategic</div>
+          <div class="tone-pill"><div class="tone-dot"></div> Confident</div>
+        </div>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div>
+        <div class="sidebar-section-label">The 3 C's Formula</div>
+        <div class="tone-list">
+          <div class="tone-pill"><div class="tone-dot"></div> Clarity</div>
+          <div class="tone-pill"><div class="tone-dot"></div> Commitment</div>
+          <div class="tone-pill"><div class="tone-dot"></div> Consistency</div>
+        </div>
+      </div>
+
+      <div class="contact-block">
+        <div class="sidebar-divider" style="margin-bottom:16px;"></div>
+        <div class="contact-line"><span>bennett@bwschwartz.com</span></div>
+        <div class="contact-line"><span>bwschwartz.com</span></div>
+        <div class="year-line">© 2026 Coaching With Bennett</div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+      <div class="main-title">Brand Guidelines — One Sheet Reference</div>
+
+      <!-- COLORS -->
+      <div>
+        <div class="block-label">Color Palette</div>
+        <div class="colors-strip">
+          <div style="background:#C3D350;"></div>
+          <div style="background:#BFDDDF;"></div>
+          <div style="background:#007EA7;"></div>
+          <div style="background:#003459;"></div>
+          <div style="background:#1C1C1C;"></div>
+        </div>
+        <div class="color-cards">
+          <div class="color-card">
+            <div class="color-swatch" style="background:#C3D350;"></div>
+            <div class="color-info">
+              <div class="color-name">Lime Green</div>
+              <div class="color-hex">#C3D350</div>
+              <div class="color-rgb">RGB 195, 211, 80</div>
+              <div class="color-use">CTAs, highlights, active states</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background:#BFDDDF;"></div>
+            <div class="color-info">
+              <div class="color-name">Sky Blue</div>
+              <div class="color-hex">#BFDDDF</div>
+              <div class="color-rgb">RGB 191, 221, 223</div>
+              <div class="color-use">Soft backgrounds, text on dark</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background:#007EA7;"></div>
+            <div class="color-info">
+              <div class="color-name">Teal</div>
+              <div class="color-hex">#007EA7</div>
+              <div class="color-rgb">RGB 0, 126, 167</div>
+              <div class="color-use">Primary accent, links, nav CTAs</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background:#003459;"></div>
+            <div class="color-info">
+              <div class="color-name">Navy</div>
+              <div class="color-hex">#003459</div>
+              <div class="color-rgb">RGB 0, 52, 89</div>
+              <div class="color-use">Backgrounds, headings, footer</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-swatch" style="background:#1C1C1C;"></div>
+            <div class="color-info">
+              <div class="color-name">Near Black</div>
+              <div class="color-hex">#1C1C1C</div>
+              <div class="color-rgb">RGB 28, 28, 28</div>
+              <div class="color-use">Dark sections, body text</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TYPOGRAPHY -->
+      <div>
+        <div class="block-label">Typography</div>
+        <div class="type-row">
+          <div class="type-block">
+            <div class="type-block-meta">
+              <div class="type-block-name">Playfair Display</div>
+              <div class="type-block-role">Headlines & Quotes</div>
+            </div>
+            <div class="type-sample-serif">Unlock Your<br /><em>Greatness.</em></div>
+            <div class="type-weights">Bold 700 · ExtraBold 800 · Italic 700i</div>
+          </div>
+          <div class="type-block">
+            <div class="type-block-meta">
+              <div class="type-block-name">Inter</div>
+              <div class="type-block-role">Body, UI & Labels</div>
+            </div>
+            <div class="type-sample-sans">High-performance coaching for leaders who want clarity, strategy, and real outcomes.</div>
+            <div class="type-weights">Light 300 · Regular 400 · Medium 500 · SemiBold 600 · Bold 700</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; background:var(--off); border-radius:6px; padding:12px 16px;">
+          <div class="type-scale-row">
+            <div class="ts-label">Display</div><div class="ts-size">48–60px</div>
+            <div style="font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--navy);">Coaching With Bennett</div>
+          </div>
+          <div class="type-scale-row">
+            <div class="ts-label">H1</div><div class="ts-size">36–44px</div>
+            <div style="font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--navy);">Unlock Your Greatness</div>
+          </div>
+          <div class="type-scale-row">
+            <div class="ts-label">H2</div><div class="ts-size">28–32px</div>
+            <div style="font-family:'Playfair Display',serif; font-size:1rem; color:var(--navy);">Services & Programs</div>
+          </div>
+          <div class="type-scale-row">
+            <div class="ts-label">Body</div><div class="ts-size">16–18px</div>
+            <div style="font-size:.82rem; color:#444;">Clear body copy — Inter Regular</div>
+          </div>
+          <div class="type-scale-row">
+            <div class="ts-label">Label</div><div class="ts-size">11–13px</div>
+            <div style="font-size:.62rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--teal);">Section Labels · Eyebrows</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGO + DO/DON'T -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div>
+          <div class="block-label">Logo Variants</div>
+          <div class="logo-row">
+            <div class="logo-box logo-light">
+              <div class="logo-mark">CWB</div>
+              <div class="logo-wm">Coaching With Bennett<span>Performance Coaching</span></div>
+              <div class="logo-caption">Light BG</div>
+            </div>
+            <div class="logo-box logo-dark">
+              <div class="logo-mark">CWB</div>
+              <div class="logo-wm">Coaching With Bennett<span>Performance Coaching</span></div>
+              <div class="logo-caption">Dark BG</div>
+            </div>
+            <div class="logo-box logo-teal">
+              <div class="logo-mark">CWB</div>
+              <div class="logo-wm">Coaching With Bennett<span>Performance Coaching</span></div>
+              <div class="logo-caption">Teal BG</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="block-label">Usage Rules</div>
+          <div class="rules-row">
+            <div class="do-box">
+              <div class="rules-title">Do</div>
+              <ul class="rules-list">
+                <li>Use approved colors only</li>
+                <li>Maintain logo clear space</li>
+                <li>Use Playfair for headings</li>
+                <li>Keep lime accents sparse</li>
+              </ul>
+            </div>
+            <div class="dont-box">
+              <div class="rules-title">Don't</div>
+              <ul class="rules-list">
+                <li>Alter brand colors</li>
+                <li>Mix in other fonts</li>
+                <li>Place logo on busy BGs</li>
+                <li>Stretch or skew elements</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

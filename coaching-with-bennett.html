@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coaching With Bennett | High Performance Executive Coach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lime:  '#C3D350',
+            sky:   '#BFDDDF',
+            teal:  '#007EA7',
+            navy:  '#003459',
+            dark:  '#1C1C1C',
+          },
+          fontFamily: {
+            heading: ['"Playfair Display"', 'serif'],
+            body:    ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #003459; color: #BFDDDF; }
+
+    /* ── BUTTONS ── */
+    .lime-btn, .outline-btn, .teal-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .lime-btn::after, .outline-btn::after, .teal-btn::after {
+      content: '';
+      position: absolute;
+      top: -60%; left: -80%;
+      width: 45%; height: 220%;
+      background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.38) 45%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0.38) 55%, transparent 100%);
+      transform: skewX(-22deg);
+      animation: btnShine 3.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes btnShine {
+      0%   { left: -80%; opacity: 0; }
+      8%   { opacity: 1; }
+      38%  { left: 130%; opacity: 1; }
+      39%  { opacity: 0; }
+      100% { left: 130%; opacity: 0; }
+    }
+
+    /* ── ROTATING WORD ── */
+    .rotating-word { display: inline-block; color: #C3D350; white-space: nowrap; }
+    .rotating-word.entering { animation: wordIn  0.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; }
+    .rotating-word.exiting  { animation: wordOut 0.42s cubic-bezier(0.55, 0, 1, 0.45) forwards; }
+    @keyframes wordIn  { from { transform: translateY(28px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes wordOut { from { transform: translateY(0);    opacity: 1; } to { transform: translateY(-28px); opacity: 0; } }
+
+    /* ── HERO PHOTO BLEND ── */
+    .hero-photo-wrap {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 60%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-photo-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    .hero-photo-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right,
+        #003459 0%,
+        #003459 15%,
+        rgba(0,52,89,0.92) 32%,
+        rgba(0,52,89,0.55) 52%,
+        rgba(0,52,89,0.15) 72%,
+        transparent 90%
+      );
+      z-index: 1;
+    }
+    .hero-photo-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, #003459 0%, rgba(0,52,89,0.5) 20%, transparent 45%);
+      z-index: 1;
+    }
+
+    /* ── SERVICE CARDS ── */
+    .service-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .service-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.35);
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal-card {
+      background: #002a47;
+      border: 1px solid rgba(191,221,223,0.15);
+      border-radius: 18px;
+      padding: 2.5rem;
+      max-width: 580px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.88) translateY(24px);
+      transition: transform 0.38s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.3s;
+      opacity: 0;
+    }
+    .modal-overlay.active .modal-card {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    .modal-card::-webkit-scrollbar { width: 4px; }
+    .modal-card::-webkit-scrollbar-thumb { background: #007EA7; border-radius: 2px; }
+
+    /* ── TESTIMONIAL SCROLL ── */
+    @keyframes scrollUp {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
+    }
+    .testi-track {
+      animation: scrollUp linear infinite;
+    }
+    .testi-track:hover { animation-play-state: paused; }
+    .testi-column {
+      mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── NAV SCROLL ── */
+    .nav-scrolled {
+      background: rgba(0,30,55,0.97) !important;
+      backdrop-filter: blur(14px) !important;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #002244; }
+    ::-webkit-scrollbar-thumb { background: #007EA7; border-radius: 3px; }
+
+    /* ── FOCUS STYLES ── */
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: rgba(195,211,80,0.5) !important;
+      box-shadow: 0 0 0 2px rgba(195,211,80,0.12);
+    }
+    select option { background: #002a47; color: #BFDDDF; }
+  </style>
+</head>
+<body class="bg-navy font-body">
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 lg:px-14" style="background: rgba(0,52,89,0); backdrop-filter: blur(0px);">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center font-heading font-extrabold text-navy text-sm flex-shrink-0" style="background:#C3D350;">CWB</div>
+      <div class="font-heading text-white leading-tight hidden sm:block">
+        <div class="text-[0.95rem] font-bold">Coaching With Bennett</div>
+        <div class="text-[0.6rem] font-body font-semibold tracking-[2px] uppercase" style="color: rgba(191,221,223,0.6);">Performance Coaching</div>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-7">
+      <a href="#about"       class="text-sm font-medium transition-colors hover:text-white" style="color:rgba(191,221,223,0.75);">About</a>
+      <a href="#services"    class="text-sm font-medium transition-colors hover:text-white" style="color:rgba(191,221,223,0.75);">Services</a>
+      <a href="#program"     class="text-sm font-medium transition-colors hover:text-white" style="color:rgba(191,221,223,0.75);">The 3 C's</a>
+      <a href="#book"        class="text-sm font-medium transition-colors hover:text-white" style="color:rgba(191,221,223,0.75);">Book</a>
+      <a href="#contact"     class="text-sm font-medium transition-colors hover:text-white" style="color:rgba(191,221,223,0.75);">Contact</a>
+    </div>
+    <a href="#contact" class="lime-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-bold text-sm font-body" style="background:#C3D350; color:#003459;">
+      Book a Discovery Call
+    </a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="relative min-h-screen flex items-center overflow-hidden" style="background: linear-gradient(140deg, #001e36 0%, #003459 55%, #00406e 100%);">
+
+  <div class="hero-photo-wrap">
+    <img src="References/Bennett gray (1).jpg" alt="Bennett Schwartz — High Performance Executive Coach" />
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-14 py-36 w-full">
+    <div class="max-w-[560px]">
+      <!-- Eyebrow -->
+      <div class="inline-flex items-center gap-2 mb-7 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase" style="background: rgba(195,211,80,0.1); border: 1px solid rgba(195,211,80,0.35); color:#C3D350;">
+        <span class="w-1.5 h-1.5 rounded-full bg-lime inline-block"></span>
+        High Performance Executive Coach
+      </div>
+
+      <!-- Headline -->
+      <h1 class="font-heading font-extrabold leading-[1.02] mb-6 text-white" style="font-size: clamp(3rem, 7vw, 5.5rem);">
+        Unlock Your<br />
+        <em class="font-heading" style="font-style:italic; color:#BFDDDF;">Greatness.</em><br />
+        <span style="font-size:0.68em; line-height:1.2; display:block; margin-top:0.1em;">Live the life you<br /><span id="rotatingWord" class="rotating-word entering">Truly Desire.</span></span>
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="text-lg md:text-xl leading-relaxed mb-9 max-w-md" style="color: rgba(191,221,223,0.82);">
+        Helping driven professionals and entrepreneurs unlock their greatness by re-programming their beliefs and maximizing their resources.
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4 mb-10">
+        <a href="#contact" class="lime-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-[0.95rem] font-body" style="background:#C3D350; color:#003459;">
+          Book a Discovery Call &rarr;
+        </a>
+        <a href="#services" class="outline-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-[0.95rem] font-body border-2 transition-colors hover:bg-white/10" style="border-color: rgba(191,221,223,0.4); color:#BFDDDF;">
+          Explore Services
+        </a>
+      </div>
+
+      <!-- Brand Pillars -->
+      <div class="flex flex-wrap gap-3">
+        <span class="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border" style="background:rgba(195,211,80,0.08); border-color:rgba(195,211,80,0.25); color:#C3D350;">
+          <span class="w-1.5 h-1.5 rounded-full bg-lime"></span>Clarity
+        </span>
+        <span class="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border" style="background:rgba(195,211,80,0.08); border-color:rgba(195,211,80,0.25); color:#C3D350;">
+          <span class="w-1.5 h-1.5 rounded-full bg-lime"></span>Commitment
+        </span>
+        <span class="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border" style="background:rgba(195,211,80,0.08); border-color:rgba(195,211,80,0.25); color:#C3D350;">
+          <span class="w-1.5 h-1.5 rounded-full bg-lime"></span>Consistency
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom section fade -->
+  <div class="absolute bottom-0 left-0 right-0 h-36 pointer-events-none" style="background: linear-gradient(to bottom, transparent, #003459);"></div>
+</section>
+
+<!-- ═══════════════════════ WHO I WORK WITH ═══════════════════════ -->
+<section id="services" class="py-24 px-6 lg:px-14" style="background:#003459;">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-3">
+      <div class="inline-block text-xs font-bold tracking-[3px] uppercase mb-4" style="color:#007EA7;">Who I Work With</div>
+      <h2 class="font-heading font-bold text-white mb-4" style="font-size: clamp(2rem, 4.5vw, 3.2rem);">
+        Turn Your Potential Into<br /><em style="color:#C3D350;">Real Results</em>
+      </h2>
+      <p class="max-w-lg mx-auto text-base leading-relaxed" style="color:rgba(191,221,223,0.72);">
+        I work with high-achievers who are ready to stop settling and start operating at the level they know they're capable of.
+      </p>
+    </div>
+    <p class="text-center text-xs font-bold tracking-widest uppercase mt-5 mb-10" style="color:rgba(195,211,80,0.55);">Click any card to learn more</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Card 1 -->
+      <div class="service-card rounded-2xl p-8 border" style="background: linear-gradient(145deg, rgba(0,126,167,0.18), rgba(0,36,65,0.9)); border-color:rgba(0,126,167,0.3);" onclick="openModal('modal-1')">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-2xl" style="background:rgba(195,211,80,0.12); border:1px solid rgba(195,211,80,0.2);">🎯</div>
+        <div class="text-xs font-bold tracking-[2.5px] uppercase mb-2" style="color:#007EA7;">Executive Coaching</div>
+        <h3 class="font-heading font-bold text-white text-xl mb-3">Leaders &amp; Executives</h3>
+        <p class="text-sm leading-relaxed mb-5" style="color:rgba(191,221,223,0.72);">For C-suite leaders, senior managers, and high-potential professionals ready to unlock their next level of performance.</p>
+        <div class="flex items-center gap-2 text-xs font-bold" style="color:#C3D350;">Learn More <span>&rarr;</span></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card rounded-2xl p-8 border" style="background: linear-gradient(145deg, rgba(195,211,80,0.12), rgba(0,36,65,0.9)); border-color:rgba(195,211,80,0.28);" onclick="openModal('modal-2')">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-2xl" style="background:rgba(195,211,80,0.12); border:1px solid rgba(195,211,80,0.2);">🚀</div>
+        <div class="text-xs font-bold tracking-[2.5px] uppercase mb-2" style="color:#C3D350;">Business Coaching</div>
+        <h3 class="font-heading font-bold text-white text-xl mb-3">Entrepreneurs &amp; Founders</h3>
+        <p class="text-sm leading-relaxed mb-5" style="color:rgba(191,221,223,0.72);">For business owners who know they're capable of more but need clarity, strategy, and accountability to make it happen.</p>
+        <div class="flex items-center gap-2 text-xs font-bold" style="color:#C3D350;">Learn More <span>&rarr;</span></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="service-card rounded-2xl p-8 border" style="background: linear-gradient(145deg, rgba(0,126,167,0.18), rgba(0,36,65,0.9)); border-color:rgba(0,126,167,0.3);" onclick="openModal('modal-3')">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-2xl" style="background:rgba(195,211,80,0.12); border:1px solid rgba(195,211,80,0.2);">✨</div>
+        <div class="text-xs font-bold tracking-[2.5px] uppercase mb-2" style="color:#007EA7;">Life Coaching</div>
+        <h3 class="font-heading font-bold text-white text-xl mb-3">Personal Transformation</h3>
+        <p class="text-sm leading-relaxed mb-5" style="color:rgba(191,221,223,0.72);">For individuals ready to reprogram limiting beliefs, build unshakable confidence, and design a life they truly desire.</p>
+        <div class="flex items-center gap-2 text-xs font-bold" style="color:#C3D350;">Learn More <span>&rarr;</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MODAL 1 ═══════════════════════ -->
+<div id="modal-1" class="modal-overlay" onclick="closeModalOnBackdrop(event,'modal-1')">
+  <div class="modal-card">
+    <div class="flex items-start justify-between mb-4">
+      <div>
+        <div class="text-xs font-bold tracking-[2.5px] uppercase mb-1" style="color:#007EA7;">Executive Coaching</div>
+        <h3 class="font-heading font-bold text-white text-2xl">Leaders &amp; Executives</h3>
+      </div>
+      <button onclick="closeModal('modal-1')" class="text-2xl leading-none ml-4 mt-1 transition-colors hover:text-white" style="color:rgba(191,221,223,0.5);">&times;</button>
+    </div>
+    <p class="text-sm leading-relaxed mb-6" style="color:rgba(191,221,223,0.8);">For high-achieving leaders who are ready to operate at their peak — both professionally and personally. If you're running fast but feel like something's still holding you back, this is for you.</p>
+    <ul class="space-y-3.5 mb-8">
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Strategic Clarity:</strong> Cut through noise and identify the decisions that actually move the needle in your career and organization.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Performance Mindset:</strong> Rewire the limiting beliefs that are quietly capping your output and leadership presence.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Leadership Presence:</strong> Communicate, inspire, and lead in a way that commands respect and drives real results across your team.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Work-Life Integration:</strong> Build systems so your professional success doesn't come at the cost of your health, relationships, or fulfilment.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Accountability Structure:</strong> Weekly sessions with real progress tracking to keep you moving fast and consistently toward your goals.</span>
+      </li>
+    </ul>
+    <a href="#contact" onclick="closeModal('modal-1')" class="lime-btn inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm font-body" style="background:#C3D350; color:#003459;">Book a Discovery Call &rarr;</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MODAL 2 ═══════════════════════ -->
+<div id="modal-2" class="modal-overlay" onclick="closeModalOnBackdrop(event,'modal-2')">
+  <div class="modal-card">
+    <div class="flex items-start justify-between mb-4">
+      <div>
+        <div class="text-xs font-bold tracking-[2.5px] uppercase mb-1" style="color:#C3D350;">Business Coaching</div>
+        <h3 class="font-heading font-bold text-white text-2xl">Entrepreneurs &amp; Founders</h3>
+      </div>
+      <button onclick="closeModal('modal-2')" class="text-2xl leading-none ml-4 mt-1 transition-colors hover:text-white" style="color:rgba(191,221,223,0.5);">&times;</button>
+    </div>
+    <p class="text-sm leading-relaxed mb-6" style="color:rgba(191,221,223,0.8);">For business owners ready to unlock the next stage of growth — with the clarity, strategy, and momentum to make it a reality rather than a goal you keep pushing back.</p>
+    <ul class="space-y-3.5 mb-8">
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Business Clarity:</strong> Define your vision, ideal client, and the exact offer that positions you as the obvious choice in your market.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Client Acquisition:</strong> Build a repeatable, authentic process for attracting and converting high-value clients without feeling salesy.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Revenue Strategy:</strong> Price your services with confidence and structure programs that scale without burning you out.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Mindset Mastery:</strong> Overcome the self-doubt and fear of failure that keeps talented founders playing way below their potential.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Growth Systems:</strong> Build the habits, routines, and metrics that create consistent forward momentum — even on hard days.</span>
+      </li>
+    </ul>
+    <a href="#contact" onclick="closeModal('modal-2')" class="lime-btn inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm font-body" style="background:#C3D350; color:#003459;">Book a Discovery Call &rarr;</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MODAL 3 ═══════════════════════ -->
+<div id="modal-3" class="modal-overlay" onclick="closeModalOnBackdrop(event,'modal-3')">
+  <div class="modal-card">
+    <div class="flex items-start justify-between mb-4">
+      <div>
+        <div class="text-xs font-bold tracking-[2.5px] uppercase mb-1" style="color:#007EA7;">Life Coaching</div>
+        <h3 class="font-heading font-bold text-white text-2xl">Personal Transformation</h3>
+      </div>
+      <button onclick="closeModal('modal-3')" class="text-2xl leading-none ml-4 mt-1 transition-colors hover:text-white" style="color:rgba(191,221,223,0.5);">&times;</button>
+    </div>
+    <p class="text-sm leading-relaxed mb-6" style="color:rgba(191,221,223,0.8);">For individuals ready to stop surviving and start truly living — by identifying and rewiring the beliefs and patterns that have been quietly running the show.</p>
+    <ul class="space-y-3.5 mb-8">
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Belief Reprogramming:</strong> Identify and dismantle the subconscious patterns sabotaging your success, confidence, and happiness.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Vision &amp; Purpose:</strong> Clarify what you truly want — not what you've been told to want — and build a real roadmap to get there.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Confidence Building:</strong> Develop the unshakable self-belief that lets you act boldly — even when you're scared.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Life by Design:</strong> Build a life where career, relationships, health, and fulfilment all rise together — not at each other's expense.</span>
+      </li>
+      <li class="flex gap-3 text-sm" style="color:rgba(191,221,223,0.85);">
+        <span class="flex-shrink-0 font-bold mt-0.5" style="color:#C3D350;">&#9658;</span>
+        <span><strong class="text-white">Sustained Results:</strong> Forge the habits and accountability structures that make transformation permanent, not temporary.</span>
+      </li>
+    </ul>
+    <a href="#contact" onclick="closeModal('modal-3')" class="lime-btn inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm font-body" style="background:#C3D350; color:#003459;">Book a Discovery Call &rarr;</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════ ABOUT ═══════════════════════ -->
+<section id="about" class="py-24 px-6 lg:px-14" style="background: linear-gradient(180deg, #003459 0%, #002244 100%);">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Text -->
+      <div>
+        <div class="text-xs font-bold tracking-[3px] uppercase mb-4" style="color:#007EA7;">About Bennett</div>
+        <h2 class="font-heading font-bold text-white mb-6" style="font-size: clamp(2rem, 4.5vw, 3.2rem);">
+          Your Partner in<br /><em style="color:#C3D350;">Unlocking Greatness</em>
+        </h2>
+        <div class="space-y-4 text-base leading-relaxed" style="color:rgba(191,221,223,0.83);">
+          <p>Bennett Schwartz is a High Performance Executive Coach who has spent years working with driven professionals, entrepreneurs, and executives who know they're capable of more — and are ready to prove it. His philosophy is simple: your results are a direct reflection of your beliefs, habits, and decisions. Change those, and everything changes.</p>
+          <p>Bennett's approach combines strategic thinking with deep inner work. He doesn't just help you set goals — he helps you understand exactly what's been keeping you from reaching them, and builds a clear, actionable path to break through. Every session is direct, focused, and designed to produce real shifts — not just good conversations.</p>
+          <p>As the author of <em style="color:#C3D350;">Lost Then Found</em>, Bennett draws on his own journey of transformation to meet clients exactly where they are. Whether you're navigating a career pivot, scaling a business, or simply ready to stop settling — Bennett brings the clarity, strategy, and accountability you need to live the life you truly desire.</p>
+        </div>
+        <div class="flex flex-wrap gap-2 mt-7">
+          <span class="px-3 py-1 rounded-full text-xs font-semibold border" style="border-color:rgba(195,211,80,0.3); color:#C3D350; background:rgba(195,211,80,0.08);">Empowering</span>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold border" style="border-color:rgba(195,211,80,0.3); color:#C3D350; background:rgba(195,211,80,0.08);">Direct &amp; Clear</span>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold border" style="border-color:rgba(195,211,80,0.3); color:#C3D350; background:rgba(195,211,80,0.08);">Results-Focused</span>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold border" style="border-color:rgba(0,126,167,0.35); color:#BFDDDF; background:rgba(0,126,167,0.1);">Warm &amp; Human</span>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold border" style="border-color:rgba(0,126,167,0.35); color:#BFDDDF; background:rgba(0,126,167,0.1);">Strategic</span>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold border" style="border-color:rgba(0,126,167,0.35); color:#BFDDDF; background:rgba(0,126,167,0.1);">Confident</span>
+        </div>
+      </div>
+
+      <!-- Photo with accent border -->
+      <div class="flex justify-center lg:justify-end">
+        <div class="relative">
+          <div class="absolute rounded-2xl" style="inset:0; border: 2px solid #C3D350; transform: translate(14px, 14px); border-radius: 16px; z-index:0;"></div>
+          <img src="References/Bennett gray (1).jpg" alt="Bennett Schwartz" class="relative rounded-2xl w-full" style="max-width: 420px; max-height: 520px; object-fit:cover; object-position:top; z-index:1;" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ THE 3 C'S ═══════════════════════ -->
+<section id="program" class="py-24 px-6 lg:px-14 text-center" style="background:#1C1C1C;">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-xs font-bold tracking-[3px] uppercase mb-4" style="color:#C3D350;">Signature Framework</div>
+    <h2 class="font-heading font-bold text-white mb-4" style="font-size: clamp(2.5rem, 6vw, 4.5rem);">The 3 C's Formula</h2>
+    <p class="text-lg mb-3" style="color:rgba(191,221,223,0.8);">The framework behind every transformation Bennett leads.</p>
+    <p class="text-base leading-relaxed mb-14 max-w-2xl mx-auto" style="color:rgba(191,221,223,0.58);">After years of coaching high-performers across industries, Bennett identified three non-negotiables that separate those who achieve lasting change from those who stay stuck. This isn't theory — it's the exact framework applied in every coaching engagement.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-7 mb-14">
+
+      <div class="p-8 rounded-2xl border" style="background:rgba(0,52,89,0.55); border-color:rgba(195,211,80,0.2);">
+        <div class="font-heading font-extrabold leading-none mb-3" style="font-size:5rem; color:rgba(195,211,80,0.12);">C</div>
+        <div class="text-xs font-bold tracking-[2.5px] uppercase mb-3" style="color:#007EA7;">Pillar 01</div>
+        <h3 class="font-heading font-bold text-white text-2xl mb-3">Clarity</h3>
+        <p class="text-sm leading-relaxed" style="color:rgba(191,221,223,0.68);">You can't hit a target you can't see. Clarity is the foundation — getting crystal clear on who you are, what you want, and exactly what has been standing in the way.</p>
+      </div>
+
+      <div class="p-8 rounded-2xl border" style="background:rgba(195,211,80,0.07); border-color:rgba(195,211,80,0.3);">
+        <div class="font-heading font-extrabold leading-none mb-3" style="font-size:5rem; color:rgba(195,211,80,0.12);">C</div>
+        <div class="text-xs font-bold tracking-[2.5px] uppercase mb-3" style="color:#C3D350;">Pillar 02</div>
+        <h3 class="font-heading font-bold text-white text-2xl mb-3">Commitment</h3>
+        <p class="text-sm leading-relaxed" style="color:rgba(191,221,223,0.68);">Real change requires a real decision. Commitment means burning the boats — fully investing in the outcome with no back door, no excuses, and no looking back.</p>
+      </div>
+
+      <div class="p-8 rounded-2xl border" style="background:rgba(0,52,89,0.55); border-color:rgba(195,211,80,0.2);">
+        <div class="font-heading font-extrabold leading-none mb-3" style="font-size:5rem; color:rgba(195,211,80,0.12);">C</div>
+        <div class="text-xs font-bold tracking-[2.5px] uppercase mb-3" style="color:#007EA7;">Pillar 03</div>
+        <h3 class="font-heading font-bold text-white text-2xl mb-3">Consistency</h3>
+        <p class="text-sm leading-relaxed" style="color:rgba(191,221,223,0.68);">Transformation isn't a moment — it's a practice. Consistency is where the work becomes who you are, compounding results week after week, month after month.</p>
+      </div>
+
+    </div>
+
+    <a href="#contact" class="lime-btn inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-base font-body" style="background:#C3D350; color:#003459;">
+      Start Your Transformation &rarr;
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════ BOOK ═══════════════════════ -->
+<section id="book" class="py-24 px-6 lg:px-14" style="background: linear-gradient(180deg, #002244 0%, #003459 100%);">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Book cover with glow -->
+      <div class="flex justify-center">
+        <div class="relative">
+          <div class="absolute inset-0 rounded-xl pointer-events-none" style="background: radial-gradient(ellipse at center, rgba(195,211,80,0.35) 0%, transparent 68%); filter:blur(28px); transform:scale(1.15); z-index:0;"></div>
+          <img src="References/Book Maze yellow done.jpeg" alt="Lost Then Found — Bennett Schwartz" class="relative rounded-xl shadow-2xl" style="max-width:260px; width:100%; z-index:1;" />
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <div class="text-xs font-bold tracking-[3px] uppercase mb-4" style="color:#C3D350;">Now Available</div>
+        <h2 class="font-heading font-bold text-white mb-4" style="font-size: clamp(2rem, 4.5vw, 3.2rem);">Lost Then Found</h2>
+        <p class="font-heading italic text-xl mb-6" style="color:#BFDDDF;">"Go From Being Lost to Finding Your Greatness — It's Time To Change Your Life"</p>
+        <p class="text-base leading-relaxed mb-8" style="color:rgba(191,221,223,0.8);">In this transformative book, Bennett Schwartz shares the hard-won lessons from his own journey through uncertainty, self-doubt, and rediscovery — and the exact framework he used to build a life of purpose, performance, and fulfilment. If you've ever felt lost, stuck, or unsure of your next move, this book will help you find your way back to yourself.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#contact" class="lime-btn inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm font-body" style="background:#C3D350; color:#003459;">
+            Get the Book &rarr;
+          </a>
+          <a href="#contact" class="outline-btn inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm font-body border-2 transition-colors hover:bg-white/10" style="border-color:rgba(191,221,223,0.35); color:#BFDDDF;">
+            Book Bennett to Speak
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TESTIMONIALS ═══════════════════════ -->
+<section id="testimonials" class="py-24 px-6 lg:px-14 overflow-hidden" style="background:#1C1C1C;">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <span class="inline-block text-xs font-bold tracking-[3px] uppercase px-4 py-2 rounded-full mb-4 border" style="background:rgba(195,211,80,0.08); border-color:rgba(195,211,80,0.22); color:#C3D350;">Client Results</span>
+      <h2 class="font-heading font-bold text-white mb-3" style="font-size: clamp(2rem, 4.5vw, 3.2rem);">
+        Real Words.<br /><em style="color:#C3D350;">Real Transformations.</em>
+      </h2>
+      <p class="text-sm" style="color:rgba(191,221,223,0.45);">Real messages from real clients — unedited.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" style="height:600px;">
+
+      <!-- ── COLUMN A — 30s ── -->
+      <div class="testi-column" style="height:600px;">
+        <div class="testi-track" style="animation-duration:30s;">
+          <!-- 4 cards -->
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"My recent coaching call with Bennett created a huge productivity shift for me and where I am right now in my life. We tackled both short term and long term steps to help propel me to the next chapter professionally and personally. I highly recommend working with Bennett if you're feeling stuck and want to set up immediate and realistic goals to be your best self."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">C</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Coaching Client</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Working with Bennett helped me create vision in my life and in my business. He was able to guide me and push me out of my comfort zone, all the while keeping me in the driver's seat. Bennett was able to take me out of a place of uncertainty and put me on a path of clear vision and mindset to get the absolute most out of myself and my life."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">B</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Business Owner</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennet I can't believe it — since I've started working with you my income in coaching has grown exponentially.... I can only wish that you give everyone a bit of your fairy dust!"</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">E</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Executive Coach</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"I had an amazing time with Bennett as my coach. I gained so much from him. Every single time I came, he was there, ready, 100% present. And I never walked away disappointed. He was able to help me see sometimes the answers that I already had inside me. It was an amazing experience and I highly recommend him to anyone and everyone."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">L</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Life Coaching Client</span>
+            </div>
+          </div>
+          <!-- Duplicate set for seamless loop -->
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"My recent coaching call with Bennett created a huge productivity shift for me and where I am right now in my life. We tackled both short term and long term steps to help propel me to the next chapter professionally and personally. I highly recommend working with Bennett if you're feeling stuck and want to set up immediate and realistic goals to be your best self."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">C</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Coaching Client</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Working with Bennett helped me create vision in my life and in my business. He was able to guide me and push me out of my comfort zone, all the while keeping me in the driver's seat. Bennett was able to take me out of a place of uncertainty and put me on a path of clear vision and mindset to get the absolute most out of myself and my life."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">B</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Business Owner</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennet I can't believe it — since I've started working with you my income in coaching has grown exponentially.... I can only wish that you give everyone a bit of your fairy dust!"</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">E</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Executive Coach</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"I had an amazing time with Bennett as my coach. I gained so much from him. Every single time I came, he was there, ready, 100% present. And I never walked away disappointed. He was able to help me see sometimes the answers that I already had inside me. It was an amazing experience and I highly recommend him to anyone and everyone."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">L</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Life Coaching Client</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── COLUMN B — 40s (hidden mobile) ── -->
+      <div class="testi-column hidden md:block" style="height:600px;">
+        <div class="testi-track" style="animation-duration:40s;">
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennet has been a fantastic asset for me in my business growth. Like many coaches he is very knowledgeable. But what makes Bennet unique is his ability to meet me exactly where I am and at my level of growth in my specific company. He takes the time and has the wisdom to guide me to the exact next step I need in my business. My relationship with him has been invaluable to the growth of my company."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">F</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Founder &amp; CEO</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"As I build my coaching and consulting career, Bennett's insights really helped me frame what I'm doing and gave me the motivation to keep going when things were slowing down. His insights helped me lock in 4 clients within weeks of starting to work with him. Highly recommend him to be your coach!"</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">C</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Consultant</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"I had a great experience accepting a coaching session with Bennet. He displayed the ability to listen, acknowledge and assess what I communicated to provide valued and intuitive feedback. I felt understood and overall appreciated the insight he offered."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">P</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Professional</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Now I know how it feels when you're scared but still have the courage to do something. Thanks to you, I really mean it. Happy weekend to you and your family!"</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">E</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Entrepreneur</span>
+            </div>
+          </div>
+          <!-- Duplicate set -->
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennet has been a fantastic asset for me in my business growth. Like many coaches he is very knowledgeable. But what makes Bennet unique is his ability to meet me exactly where I am and at my level of growth in my specific company. He takes the time and has the wisdom to guide me to the exact next step I need in my business. My relationship with him has been invaluable to the growth of my company."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">F</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Founder &amp; CEO</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"As I build my coaching and consulting career, Bennett's insights really helped me frame what I'm doing and gave me the motivation to keep going when things were slowing down. His insights helped me lock in 4 clients within weeks of starting to work with him. Highly recommend him to be your coach!"</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">C</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Consultant</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"I had a great experience accepting a coaching session with Bennet. He displayed the ability to listen, acknowledge and assess what I communicated to provide valued and intuitive feedback. I felt understood and overall appreciated the insight he offered."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">P</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Professional</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Now I know how it feels when you're scared but still have the courage to do something. Thanks to you, I really mean it. Happy weekend to you and your family!"</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">E</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Entrepreneur</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── COLUMN C — 34s (hidden tablet) ── -->
+      <div class="testi-column hidden lg:block" style="height:600px;">
+        <div class="testi-track" style="animation-duration:34s;">
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennet has a wealth of useful information and he is generous with sharing what he knows. I am grateful to have learned from his leadership and expertise. He was good about giving me time and answering all my questions."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">M</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Manager</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennett was able to zero in and identify what is holding me back from moving further in a smarter way. Putting everything out there in front of me, helped me see everything in the open and will def help as I move along in my journey. I highly recommend using his services."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">S</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Sales Director</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Because of you, I called up about 10 contractors — with only one straight out rejection, a few halfway cold, and 5 solid potential ones. TYH! You helped me take action when I was scared to pick up the phone."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">R</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Real Estate Professional</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennett was able to zero in and identify what is holding me back from moving further in a smarter way. Putting everything in front of me helped me see everything clearly — I highly recommend working with him."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">A</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Agency Owner</span>
+            </div>
+          </div>
+          <!-- Duplicate set -->
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennet has a wealth of useful information and he is generous with sharing what he knows. I am grateful to have learned from his leadership and expertise. He was good about giving me time and answering all my questions."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">M</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Manager</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennett was able to zero in and identify what is holding me back from moving further in a smarter way. Putting everything out there in front of me, helped me see everything in the open and will def help as I move along in my journey. I highly recommend using his services."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">S</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Sales Director</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(191,221,223,0.1);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Because of you, I called up about 10 contractors — with only one straight out rejection, a few halfway cold, and 5 solid potential ones. TYH! You helped me take action when I was scared to pick up the phone."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#007EA7; color:#fff;">R</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Real Estate Professional</span>
+            </div>
+          </div>
+          <div class="rounded-xl p-5 mb-4 border" style="background:rgba(0,52,89,0.65); border-color:rgba(195,211,80,0.12);">
+            <p class="text-sm leading-relaxed mb-3" style="color:rgba(191,221,223,0.85);">"Bennett was able to zero in and identify what is holding me back from moving further in a smarter way. Putting everything in front of me helped me see everything clearly — I highly recommend working with him."</p>
+            <div class="flex items-center gap-2 pt-2 border-t" style="border-color:rgba(191,221,223,0.08);">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style="background:#C3D350; color:#003459;">A</div>
+              <span class="text-xs font-semibold" style="color:rgba(191,221,223,0.5);">Agency Owner</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CTA BANNER ═══════════════════════ -->
+<section class="py-20 px-6 lg:px-14" style="background: linear-gradient(135deg, #003459 0%, #007EA7 55%, #004a7a 100%);">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="font-heading font-bold text-white mb-4" style="font-size: clamp(2rem, 5vw, 3.4rem);">
+      Ready to Unlock Your<br /><em style="color:#C3D350;">Greatness?</em>
+    </h2>
+    <p class="text-lg mb-9" style="color:rgba(191,221,223,0.88);">The life you truly desire isn't out of reach — it's one decision away. Let's build it together.</p>
+    <a href="#contact" class="lime-btn inline-flex items-center gap-2 px-9 py-4 rounded-xl font-bold text-base font-body" style="background:#C3D350; color:#003459;">
+      Book Your Discovery Call &rarr;
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+<section id="contact" class="py-24 px-6 lg:px-14" style="background:#003459;">
+  <div class="max-w-[500px] mx-auto">
+    <div class="text-center mb-10">
+      <div class="text-xs font-bold tracking-[3px] uppercase mb-3" style="color:#007EA7;">Get In Touch</div>
+      <h2 class="font-heading font-bold text-white mb-3" style="font-size: clamp(1.8rem, 4vw, 2.75rem);">Start the Conversation</h2>
+      <p class="text-base leading-relaxed" style="color:rgba(191,221,223,0.72);">Ready to take the next step? Fill out the form below and Bennett will be in touch within 24 hours.</p>
+    </div>
+    <form onsubmit="return false;" class="space-y-4">
+      <input type="text" placeholder="Your Name" required
+        class="w-full px-4 py-3.5 rounded-xl text-sm font-body text-white placeholder-sky/50 transition-all"
+        style="background:rgba(0,126,167,0.12); border:1px solid rgba(191,221,223,0.18);" />
+      <input type="email" placeholder="Email Address" required
+        class="w-full px-4 py-3.5 rounded-xl text-sm font-body text-white placeholder-sky/50 transition-all"
+        style="background:rgba(0,126,167,0.12); border:1px solid rgba(191,221,223,0.18);" />
+      <select class="w-full px-4 py-3.5 rounded-xl text-sm font-body transition-all"
+        style="background:#002a47; border:1px solid rgba(191,221,223,0.18); color:rgba(191,221,223,0.7);">
+        <option value="">What are you looking for?</option>
+        <option>Executive Coaching</option>
+        <option>Business Coaching</option>
+        <option>Life Coaching</option>
+        <option>Speaking / Event</option>
+        <option>Other</option>
+      </select>
+      <textarea rows="4" placeholder="Tell me a little about where you're at and what you're working toward..." required
+        class="w-full px-4 py-3.5 rounded-xl text-sm font-body text-white placeholder-sky/50 resize-none transition-all"
+        style="background:rgba(0,126,167,0.12); border:1px solid rgba(191,221,223,0.18);"></textarea>
+      <button type="submit" class="lime-btn w-full py-4 rounded-xl font-bold text-base font-body" style="background:#C3D350; color:#003459;">
+        Send Message &rarr;
+      </button>
+    </form>
+    <p class="text-center text-sm mt-6" style="color:rgba(191,221,223,0.45);">
+      Or email directly: <a href="mailto:bennett@bwschwartz.com" class="transition-colors hover:text-white" style="color:#BFDDDF; text-decoration:underline;">bennett@bwschwartz.com</a>
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="py-12 px-6 lg:px-14 border-t" style="background:#002040; border-color:rgba(191,221,223,0.08);">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center font-heading font-extrabold text-navy text-sm flex-shrink-0" style="background:#C3D350;">CWB</div>
+        <div class="font-heading text-white">
+          <div class="text-[0.95rem] font-bold">Coaching With Bennett</div>
+          <div class="text-[0.6rem] font-body font-semibold tracking-[2px] uppercase" style="color:rgba(191,221,223,0.45);">Performance Coaching</div>
+        </div>
+      </a>
+      <div class="flex flex-wrap items-center gap-6 text-sm" style="color:rgba(191,221,223,0.55);">
+        <a href="#about"    class="hover:text-white transition-colors">About</a>
+        <a href="#services" class="hover:text-white transition-colors">Services</a>
+        <a href="#program"  class="hover:text-white transition-colors">The 3 C's</a>
+        <a href="#book"     class="hover:text-white transition-colors">Book</a>
+        <a href="#contact"  class="hover:text-white transition-colors">Contact</a>
+      </div>
+      <a href="#contact" class="teal-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm font-body" style="background:#007EA7; color:#fff;">Book a Call</a>
+    </div>
+
+    <p class="text-center font-heading italic mb-6" style="color:rgba(191,221,223,0.4); font-size:1.05rem;">
+      "Maximizing your resources in order to live the life you truly desire."
+    </p>
+
+    <div class="flex flex-col md:flex-row items-center justify-between gap-2 text-xs border-t pt-6" style="color:rgba(191,221,223,0.3); border-color:rgba(191,221,223,0.07);">
+      <span>&copy; 2026 Coaching With Bennett. All rights reserved.</span>
+      <span>
+        <a href="mailto:bennett@bwschwartz.com" class="hover:text-white transition-colors">bennett@bwschwartz.com</a>
+        &nbsp;&middot;&nbsp;
+        <a href="http://bwschwartz.com" class="hover:text-white transition-colors">bwschwartz.com</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
+<script>
+  // NAV scroll effect
+  var nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 60) {
+      nav.classList.add('nav-scrolled');
+    } else {
+      nav.classList.remove('nav-scrolled');
+    }
+  });
+
+  // Rotating word
+  (function() {
+    var phrases = [
+      'Truly Desire.',
+      'Were Born to Live.',
+      'Always Dreamed Of.',
+      'Are Ready to Build.',
+      'Were Meant For.',
+      'Know Is Possible.',
+      'Have Always Wanted.',
+      'Are Destined For.',
+      "Can't Stop Chasing.",
+      'Truly Deserve.'
+    ];
+    var el = document.getElementById('rotatingWord');
+    var i = 0;
+    function next() {
+      el.classList.remove('entering');
+      el.classList.add('exiting');
+      setTimeout(function() {
+        i = (i + 1) % phrases.length;
+        el.textContent = phrases[i];
+        el.classList.remove('exiting');
+        el.classList.add('entering');
+      }, 390);
+    }
+    setInterval(next, 2700);
+  })();
+
+  // Modal controls
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function closeModalOnBackdrop(e, id) {
+    if (e.target === document.getElementById(id)) closeModal(id);
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.active').forEach(function(m) {
+        m.classList.remove('active');
+      });
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+
+</body>
+</html>
