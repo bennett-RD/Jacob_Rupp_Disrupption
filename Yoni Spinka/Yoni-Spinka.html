@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yoni Spinka – Executive Performance Coach</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:     '#FBF8F3',
+            parchment: '#F2EBE0',
+            surface:   '#FFFFFF',
+            charcoal:  '#1C1C1C',
+            warm:      '#7A6155',
+            terra:     '#C4572A',
+            'terra-d': '#a3461e',
+            ember:     '#E07845',
+            bark:      '#4A3525',
+          },
+          fontFamily: {
+            cormorant: ['"Cormorant Garamond"', 'serif'],
+            inter:     ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #FBF8F3; color: #1C1C1C; }
+    h1, h2, h3, blockquote { font-family: 'Cormorant Garamond', serif; }
+
+    /* Buttons */
+    .terra-btn {
+      background: #C4572A; color: #fff; font-weight: 600;
+      padding: 13px 28px; border-radius: 4px; font-size: 13px;
+      display: inline-block; text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.04em; position: relative; overflow: hidden;
+    }
+    .terra-btn:hover { background: #a3461e; transform: translateY(-1px); }
+    .terra-btn::after {
+      content: ''; position: absolute; top: -60%; left: -80%;
+      width: 45%; height: 220%;
+      background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.28) 45%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0.28) 55%, transparent 100%);
+      transform: skewX(-22deg); animation: btnShine 3.2s ease-in-out infinite; pointer-events: none;
+    }
+    .ember-btn {
+      background: #E07845; color: #fff; font-weight: 600;
+      padding: 13px 28px; border-radius: 4px; font-size: 13px;
+      display: inline-block; text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.04em; position: relative; overflow: hidden;
+    }
+    .ember-btn:hover { background: #c45f2d; transform: translateY(-1px); }
+    .ember-btn::after {
+      content: ''; position: absolute; top: -60%; left: -80%;
+      width: 45%; height: 220%;
+      background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.28) 45%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0.28) 55%, transparent 100%);
+      transform: skewX(-22deg); animation: btnShine 3.2s ease-in-out infinite; pointer-events: none;
+    }
+    .outline-terra {
+      border: 1.5px solid #C4572A; color: #C4572A; font-weight: 600;
+      padding: 12px 26px; border-radius: 4px; font-size: 13px;
+      display: inline-block; text-decoration: none;
+      font-family: 'Inter', sans-serif; transition: all 0.2s; letter-spacing: 0.04em;
+      position: relative; overflow: hidden;
+    }
+    .outline-terra:hover { background: #C4572A; color: #fff; }
+    .outline-terra::after {
+      content: ''; position: absolute; top: -60%; left: -80%;
+      width: 45%; height: 220%;
+      background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.28) 45%, rgba(255,255,255,0.42) 50%, rgba(255,255,255,0.28) 55%, transparent 100%);
+      transform: skewX(-22deg); animation: btnShine 3.2s ease-in-out infinite; pointer-events: none;
+    }
+    @keyframes btnShine {
+      0%   { left: -80%; opacity: 0; }
+      8%   { opacity: 1; }
+      38%  { left: 130%; opacity: 1; }
+      39%  { opacity: 0; }
+      100% { left: 130%; opacity: 0; }
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      color: #C4572A; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; font-family: 'Inter', sans-serif;
+    }
+
+    /* Dividers */
+    .divider      { width: 44px; height: 2px; background: #C4572A; margin: 0 auto 20px; }
+    .divider-left { width: 44px; height: 2px; background: #C4572A; margin: 0 0 20px; }
+
+    /* Nav */
+    #mainNav { transition: box-shadow 0.3s; }
+    #mainNav.scrolled { box-shadow: 0 2px 20px rgba(28,28,28,0.08); }
+
+    /* Rotating word */
+    .rotating-word { display: inline-block; color: #E07845; }
+    @keyframes wordIn  { from { transform: translateY(28px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes wordOut { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-28px); opacity: 0; } }
+    .rotating-word.entering { animation: wordIn  0.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; }
+    .rotating-word.exiting  { animation: wordOut 0.42s cubic-bezier(0.55, 0, 1, 0.45) forwards; }
+
+    /* Hero photo blend */
+    .hero-photo-panel { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+    .hero-photo-panel img {
+      position: absolute; right: 0; top: 0;
+      height: 100%; width: 58%;
+      object-fit: cover; object-position: center top;
+      filter: brightness(0.96) saturate(0.92);
+    }
+    .hero-fade-left {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, #FBF8F3 0%, rgba(251,248,243,0.90) 16%, rgba(251,248,243,0.40) 30%, rgba(251,248,243,0.05) 44%, transparent 54%);
+    }
+    .hero-fade-bottom { position: absolute; inset: 0; background: linear-gradient(to top, #FBF8F3 0%, transparent 32%); }
+    .hero-fade-top    { position: absolute; inset: 0; background: linear-gradient(to bottom, #FBF8F3 0%, transparent 14%); }
+
+    /* Service cards */
+    .service-card {
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.22,0.61,0.36,1), box-shadow 0.25s ease, border-color 0.2s;
+    }
+    .service-card:hover {
+      transform: translateY(-6px) scale(1.015);
+      box-shadow: 0 20px 48px rgba(28,28,28,0.1), 0 0 0 1.5px rgba(196,87,42,0.2);
+    }
+
+    /* Modal */
+    #cardModal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; padding: 24px; }
+    #cardModal.open { display: flex; }
+    #cardModalBackdrop {
+      position: absolute; inset: 0;
+      background: rgba(28,28,28,0.42);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      animation: backdropIn 0.25s ease forwards;
+    }
+    @keyframes backdropIn { from { opacity: 0; } to { opacity: 1; } }
+    #cardModalBox {
+      position: relative; z-index: 1;
+      max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto;
+      background: #fff; border: 1px solid rgba(28,28,28,0.08);
+      border-radius: 18px; padding: 44px;
+      animation: cardBoxIn 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+      box-shadow: 0 40px 80px rgba(28,28,28,0.16);
+    }
+    @keyframes cardBoxIn  { from { opacity: 0; transform: scale(0.90) translateY(24px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    @keyframes cardBoxOut { from { opacity: 1; transform: scale(1) translateY(0); } to { opacity: 0; transform: scale(0.94) translateY(16px); } }
+    #cardModal.closing #cardModalBox      { animation: cardBoxOut 0.25s ease forwards; }
+    #cardModal.closing #cardModalBackdrop { animation: backdropIn 0.25s ease reverse forwards; }
+    .card-modal-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 32px; height: 32px; background: rgba(28,28,28,0.06); border: none; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: #7A6155; font-size: 16px; line-height: 1; transition: background 0.2s;
+    }
+    .card-modal-close:hover { background: rgba(196,87,42,0.1); color: #C4572A; }
+    .modal-check-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 11px 0; border-bottom: 1px solid rgba(28,28,28,0.06);
+    }
+    .modal-check-item:last-child { border-bottom: none; }
+
+    /* Testimonials */
+    .testi-columns-wrap {
+      display: flex; justify-content: center; gap: 20px;
+      max-height: 720px; overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+    }
+    .testi-col { display: flex; flex-direction: column; gap: 16px; flex-shrink: 0; width: 300px; }
+    .testi-track { display: flex; flex-direction: column; gap: 16px; }
+    .testi-track.col-a { animation: scrollUp 30s linear infinite; }
+    .testi-track.col-b { animation: scrollUp 40s linear infinite; }
+    .testi-track.col-c { animation: scrollUp 34s linear infinite; }
+    @keyframes scrollUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+    .testi-track:hover { animation-play-state: paused; }
+    .testi-card {
+      background: #fff; border: 1px solid rgba(28,28,28,0.07);
+      border-radius: 12px; padding: 22px 20px; width: 300px; flex-shrink: 0;
+    }
+    .testi-card:hover { border-color: rgba(196,87,42,0.2); }
+    .testi-quote { color: #E07845; font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; line-height: 0.7; margin-bottom: 12px; }
+    .testi-text  { font-size: 13px; color: #7A6155; line-height: 1.65; }
+    .testi-badge { display: inline-block; margin-top: 14px; font-size: 11px; font-weight: 600; color: #C4572A; letter-spacing: 0.08em; border-top: 1px solid rgba(196,87,42,0.12); padding-top: 10px; width: 100%; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Pain point items */
+    .pain-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 0; border-bottom: 1px solid rgba(74,53,37,0.08);
+    }
+    .pain-item:last-child { border-bottom: none; }
+
+    /* Mobile hero — stack photo above text */
+    @media (max-width: 767px) {
+      #hero { min-height: unset; flex-direction: column; align-items: stretch; }
+      #hero .hero-photo-panel { position: relative; inset: auto; height: 72vw; max-height: 340px; }
+      #hero .hero-photo-panel img { position: absolute; width: 100%; object-position: 62% top; }
+      #hero .hero-fade-left, #hero .hero-fade-top { display: none; }
+      #hero .hero-text { padding-top: 24px; padding-bottom: 36px; }
+      #hero h1 { font-size: 1.7rem !important; }
+      #hero .hero-italic { font-size: 1.05rem !important; }
+      #hero .hero-body { font-size: 0.875rem !important; margin-bottom: 1.25rem !important; }
+    }
+
+    /* About — center on mobile/tablet */
+    @media (max-width: 1023px) {
+      .about-left { text-align: center; }
+      .about-left .divider-left { margin-left: auto; margin-right: auto; }
+      .about-photo-wrap { margin-left: auto; margin-right: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm" style="border-bottom:1px solid rgba(74,53,37,0.08);">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded flex items-center justify-center font-black text-white text-xs" style="background:#C4572A; letter-spacing:0.08em; font-family:'Inter',sans-serif;">YS</div>
+        <div class="hidden sm:block">
+          <div class="font-semibold text-charcoal text-lg leading-tight" style="font-family:'Cormorant Garamond',serif;">Yoni Spinka</div>
+          <div class="text-xs font-medium tracking-wide" style="color:#C4572A; opacity:0.75; font-family:'Inter',sans-serif;">Executive Performance Coach</div>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium" style="color:#7A6155;">
+        <a href="#about"        class="hover:text-terra transition-colors">About</a>
+        <a href="#services"     class="hover:text-terra transition-colors">Services</a>
+        <a href="#testimonials" class="hover:text-terra transition-colors">Stories</a>
+        <a href="#contact"      class="hover:text-terra transition-colors">Contact</a>
+      </div>
+      <a href="#contact" class="terra-btn text-xs py-2.5 px-5">Book a Discovery Call</a>
+    </div>
+  </nav>
+
+
+  <!-- HERO -->
+  <section id="hero" class="relative min-h-screen flex items-center pt-16" style="background:#FBF8F3; overflow:hidden;">
+    <div class="hero-photo-panel">
+      <img src="Yoni Spinka Head Shot.jpg" alt="Yoni Spinka" fetchpriority="high" />
+      <div class="hero-fade-left"></div>
+<div class="hero-fade-top"></div>
+    </div>
+    <div class="hero-text relative max-w-6xl mx-auto px-6 py-28 w-full" style="z-index:1;">
+      <div style="max-width:500px;">
+        <p class="eyebrow mb-5">Executive Performance Coach</p>
+        <h1 class="font-semibold text-charcoal mb-4" style="font-family:'Cormorant Garamond',serif; font-size:clamp(2.4rem,6vw,4.5rem); line-height:1.08;">
+          Lead With<br/>
+          <span class="rotating-word entering" id="rotatingWord" aria-live="polite">Clarity</span>
+        </h1>
+        <p class="hero-italic mb-4 font-semibold" style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-style:italic; color:#C4572A;">
+          "Dissolve Fear. Be in your Power."
+        </p>
+        <p class="hero-body mb-10 leading-relaxed" style="font-weight:300; max-width:400px; color:#7A6155; font-size:1rem;">
+          I help executives, entrepreneurs, and high-performers prioritize their own needs without becoming self-absorbed. Ancient wisdom. Modern results.
+        </p>
+        <div class="flex flex-wrap gap-4 mb-10">
+          <a href="#contact" class="terra-btn">Book a Discovery Call</a>
+          <a href="#services" class="outline-terra">Explore Services</a>
+        </div>
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
+          <div class="flex items-center gap-2 text-sm" style="color:rgba(122,97,85,0.7);">
+            <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:#C4572A;"></div>10+ Years Experience
+          </div>
+          <div class="flex items-center gap-2 text-sm" style="color:rgba(122,97,85,0.7);">
+            <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:#C4572A;"></div>Trauma-Informed &amp; IFS
+          </div>
+          <div class="flex items-center gap-2 text-sm basis-full sm:basis-auto" style="color:rgba(122,97,85,0.7);">
+            <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:#C4572A;"></div>Rabbinical &amp; Pastoral Guidance
+          </div>
+          <div class="flex items-center gap-2 text-sm basis-full sm:basis-auto" style="color:rgba(122,97,85,0.7);">
+            <div class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:#C4572A;"></div>Decades Supporting People Through Transition &amp; Growth
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROBLEM -->
+  <section class="py-24 reveal" id="problem" style="background:#F2EBE0;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-12">
+          <p class="eyebrow mb-4">Does This Sound Familiar?</p>
+          <div class="divider mb-5"></div>
+          <h2 class="font-semibold text-charcoal mb-4" style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3rem);">You're Successful on the Outside.<br/><em>Something's Missing Inside.</em></h2>
+          <p class="text-sm leading-relaxed" style="color:#7A6155; max-width:460px; margin:0 auto;">High-achievers often carry these invisible burdens. You're not broken — you're ready for the next level.</p>
+        </div>
+        <div style="background:#fff; border:1px solid rgba(74,53,37,0.08); border-radius:16px; padding:36px 40px; box-shadow:0 4px 40px rgba(74,53,37,0.06);">
+          <div class="pain-item">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style="background:rgba(196,87,42,0.1);"><div class="w-2 h-2 rounded-full" style="background:#C4572A;"></div></div>
+            <p class="text-sm leading-relaxed" style="color:#7A6155;">You constantly prioritize others' needs over your own — and feel drained, overwhelmed, and unappreciated for it.</p>
+          </div>
+          <div class="pain-item">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style="background:rgba(196,87,42,0.1);"><div class="w-2 h-2 rounded-full" style="background:#C4572A;"></div></div>
+            <p class="text-sm leading-relaxed" style="color:#7A6155;">You struggle to enjoy fun or relaxation — even when you desperately need it — because something always feels unfinished.</p>
+          </div>
+          <div class="pain-item">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style="background:rgba(196,87,42,0.1);"><div class="w-2 h-2 rounded-full" style="background:#C4572A;"></div></div>
+            <p class="text-sm leading-relaxed" style="color:#7A6155;">You're caught in persistent worry about the future, unable to be fully present in any moment.</p>
+          </div>
+          <div class="pain-item">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style="background:rgba(196,87,42,0.1);"><div class="w-2 h-2 rounded-full" style="background:#C4572A;"></div></div>
+            <p class="text-sm leading-relaxed" style="color:#7A6155;">You constantly seek approval or reassurance before making decisions — quietly undermining your own leadership.</p>
+          </div>
+          <div class="pain-item">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style="background:rgba(196,87,42,0.1);"><div class="w-2 h-2 rounded-full" style="background:#C4572A;"></div></div>
+            <p class="text-sm leading-relaxed" style="color:#7A6155;">You're hyper-critical of yourself — unable to acknowledge your wins before moving the goalpost again.</p>
+          </div>
+          <div class="pain-item">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style="background:rgba(196,87,42,0.1);"><div class="w-2 h-2 rounded-full" style="background:#C4572A;"></div></div>
+            <p class="text-sm leading-relaxed" style="color:#7A6155;">You can't disconnect from work during family time — physically present but mentally somewhere else.</p>
+          </div>
+          <div class="pain-item">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style="background:rgba(196,87,42,0.1);"><div class="w-2 h-2 rounded-full" style="background:#C4572A;"></div></div>
+            <p class="text-sm leading-relaxed" style="color:#7A6155;">You're constantly managing day-to-day crises with no time or energy left for the big picture.</p>
+          </div>
+        </div>
+        <div class="text-center mt-10">
+          <p class="font-semibold text-charcoal mb-2" style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-style:italic;">"This is exactly where I come in."</p>
+          <p class="text-sm" style="color:#7A6155; max-width:380px; margin:0 auto 24px;">I combine strategic insight, practicality, and levity to help you break through what's holding you back and create lasting change.</p>
+          <a href="#contact" class="terra-btn">Start With a Free Call</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SERVICES -->
+  <section class="py-24 reveal" id="services" style="background:#FBF8F3;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <p class="eyebrow mb-4">How We Work Together</p>
+        <div class="divider mb-5"></div>
+        <h2 class="font-semibold text-charcoal" style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3rem);">Ways to Work With Yoni</h2>
+        <p class="text-sm mt-3" style="color:#7A6155;">Click any card to learn more</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="service-card bg-white rounded-xl overflow-hidden" style="border:1px solid rgba(28,28,28,0.08);" onclick="openCardModal('svc1')">
+          <div class="h-1" style="background:#C4572A;"></div>
+          <div class="p-8">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(196,87,42,0.08);">
+              <svg class="w-5 h-5" style="color:#C4572A;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+            <p class="eyebrow mb-2">1:1 Coaching</p>
+            <h3 class="font-semibold text-charcoal mb-3" style="font-family:'Cormorant Garamond',serif; font-size:1.35rem;">Executive Performance Coaching</h3>
+            <p class="text-sm leading-relaxed mb-6" style="color:#7A6155;">Private coaching for executives, entrepreneurs, and high-performers ready to lead with clarity and actually enjoy their lives.</p>
+            <span class="outline-terra text-xs py-2 px-4 pointer-events-none">Learn More &rarr;</span>
+          </div>
+        </div>
+
+        <div class="service-card bg-white rounded-xl overflow-hidden" style="border:1px solid rgba(28,28,28,0.08);" onclick="openCardModal('svc2')">
+          <div class="h-1" style="background:#E07845;"></div>
+          <div class="p-8">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(224,120,69,0.1);">
+              <svg class="w-5 h-5" style="color:#E07845;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <p class="eyebrow mb-2" style="color:#E07845;">Signature Program</p>
+            <h3 class="font-semibold text-charcoal mb-3" style="font-family:'Cormorant Garamond',serif; font-size:1.35rem;">MANifest</h3>
+            <p class="text-sm leading-relaxed mb-6" style="color:#7A6155;">An 8-week group program for married men ready to stop managing problems and start owning solutions — in business, relationships, and within.</p>
+            <span class="text-xs font-semibold rounded py-2 px-4 pointer-events-none" style="border:1.5px solid #E07845; color:#E07845;">Learn More &rarr;</span>
+          </div>
+        </div>
+
+        <div class="service-card bg-white rounded-xl overflow-hidden" style="border:1px solid rgba(28,28,28,0.08);" onclick="openCardModal('svc3')">
+          <div class="h-1" style="background:#4A3525;"></div>
+          <div class="p-8">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(74,53,37,0.08);">
+              <svg class="w-5 h-5" style="color:#4A3525;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+            </div>
+            <p class="eyebrow mb-2" style="color:#4A3525;">Speaking</p>
+            <h3 class="font-semibold text-charcoal mb-3" style="font-family:'Cormorant Garamond',serif; font-size:1.35rem;">Keynote Speaking</h3>
+            <p class="text-sm leading-relaxed mb-6" style="color:#7A6155;">Engaging keynotes and workshops for organizations — weaving ancient wisdom with modern psychology into talks that move people to real action.</p>
+            <span class="text-xs font-semibold text-charcoal rounded py-2 px-4 pointer-events-none" style="border:1px solid rgba(74,53,37,0.3);">Learn More &rarr;</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ABOUT -->
+  <section class="py-24 reveal" id="about" style="background:#F2EBE0;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+        <div class="about-left lg:sticky lg:top-28">
+          <p class="eyebrow mb-4">About Yoni</p>
+          <div class="divider-left mb-8"></div>
+          <blockquote class="font-semibold text-charcoal leading-tight mb-10" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1.8rem,3.5vw,2.6rem);">
+            "I use fun as a gateway drug to serious personal change."
+          </blockquote>
+          <div class="about-photo-wrap relative" style="width:288px; height:340px;">
+            <div class="absolute rounded-xl" style="bottom:-12px; right:-12px; width:100%; height:100%; border:1px solid rgba(196,87,42,0.22);"></div>
+            <div class="relative rounded-xl overflow-hidden w-full h-full" style="border:1px solid rgba(28,28,28,0.07);">
+              <img src="Yoni Spinka Head Shot.jpg" alt="Yoni Spinka" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;" />
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-5 leading-relaxed text-base pt-2" style="color:#7A6155;">
+          <p>I'm Yoni Spinka — executive performance coach, Rabbi, and keynote speaker with over a decade of experience helping high-achievers dissolve fear and step into their power. I'm the CEO of Spinka Group Coaching &amp; Consulting, based in the Philadelphia suburbs, where I live with my wife and five children.</p>
+          <p>My path to coaching was anything but linear. I spent seven years as Rabbi at the University of Pennsylvania, where I taught ancient Jewish spiritual practices and mentored hundreds of students navigating the pressures of achievement, identity, and purpose. That work showed me something: the most driven people are often carrying the heaviest invisible burdens.</p>
+          <p>Today, I blend that deep wisdom tradition with modern psychology, Internal Family Systems (IFS), and practical coaching methodology to help executives, entrepreneurs, and individuals in relationships build lives that actually feel as good as they look from the outside.</p>
+          <p>My clients have included hedge fund managers, top executives at firms like Deloitte and Binance, Forbes 30 Under 30 honorees, law firm owners, and entrepreneurs across finance, technology, and entertainment. What they all share: the hunger for something more — more clarity, more balance, more fulfillment.</p>
+          <p>When I'm not coaching, you'll find me on the tennis court, on the ice rink, biking with my kids, or gleaning wisdom from the Talmud. It all finds its way into my work in different ways — bringing together clarity, practicality, and a touch of lightness to the serious work we all have to do.</p>
+          <div class="flex flex-wrap gap-2 pt-4">
+            <span class="text-xs font-medium rounded-full px-3 py-1" style="border:1px solid rgba(196,87,42,0.2); color:#C4572A;">Trauma-Informed IFS</span>
+            <span class="text-xs font-medium rounded-full px-3 py-1" style="border:1px solid rgba(196,87,42,0.2); color:#C4572A;">Executive Coaching</span>
+            <span class="text-xs font-medium rounded-full px-3 py-1" style="border:1px solid rgba(196,87,42,0.2); color:#C4572A;">Relationship Coaching</span>
+            <span class="text-xs font-medium rounded-full px-3 py-1" style="border:1px solid rgba(196,87,42,0.2); color:#C4572A;">Keynote Speaker</span>
+            <span class="text-xs font-medium rounded-full px-3 py-1" style="border:1px solid rgba(196,87,42,0.2); color:#C4572A;">Spiritual Coaching</span>
+            <span class="text-xs font-medium rounded-full px-3 py-1" style="border:1px solid rgba(196,87,42,0.2); color:#C4572A;">Self-Leadership Development</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- TESTIMONIALS -->
+  <section class="py-20 reveal" id="testimonials" style="background:#FBF8F3; overflow:hidden;">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <p class="eyebrow mb-4">Client Stories</p>
+        <div class="divider mb-5"></div>
+        <h2 class="font-semibold text-charcoal mb-3" style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,2.8rem);">Real Results. Real Transformation.</h2>
+        <p class="text-sm max-w-sm mx-auto" style="color:#7A6155;">Supporting executives, entrepreneurs, and people committed to building better lives and relationships.</p>
+      </div>
+    </div>
+    <div class="testi-columns-wrap px-6">
+
+      <div class="testi-col">
+        <div class="testi-track col-a">
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Yoni Spinka is a compassionate coach who never lets his compassion overrule his honesty and relentless pursuit of our best selves. Growth is difficult and Yoni is there not just to listen, but to hold us accountable to growing, learning, and transforming in a sustained, long-term way. Those six months were genuinely transformative — mindset shifts and mental reprogramming that helped me see more clearly and actualize my goals.</p><span class="testi-badge">Nicole F. — Professor, NYU</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Yoni helped me break through paralysis and take consistent daily action. Within a week, I closed nearly $9,000 in sales by simply following his guidance to stay consistent and reach out. His coaching created real momentum in my business.</p><span class="testi-badge">Greer T. — Small Business Owner</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">When I started working with Yoni, I was skeptical about coaching and unsure if it was worth the investment. Four months later, I can say it was one of the best decisions I've made. The progress I've made in my relationships, balance, and personal growth has been remarkable — worth every penny.</p><span class="testi-badge">Aaron B. — Tech Entrepreneur</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Yoni Spinka is a compassionate coach who never lets his compassion overrule his honesty and relentless pursuit of our best selves. Growth is difficult and Yoni is there not just to listen, but to hold us accountable to growing, learning, and transforming in a sustained, long-term way.</p><span class="testi-badge">Nicole F. — Professor, NYU</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Yoni helped me break through paralysis and take consistent daily action. Within a week, I closed nearly $9,000 in sales by simply following his guidance to stay consistent and reach out. His coaching created real momentum in my business.</p><span class="testi-badge">Greer T. — Small Business Owner</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">When I started working with Yoni, I was skeptical about coaching and unsure if it was worth the investment. Four months later, I can say it was one of the best decisions I've made. The progress I've made in my relationships, balance, and personal growth has been remarkable.</p><span class="testi-badge">Aaron B. — Tech Entrepreneur</span></div>
+        </div>
+      </div>
+
+      <div class="testi-col hidden md:block">
+        <div class="testi-track col-b">
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Over six months of working with Yoni, I experienced real transformation — from powerful mindset shifts to practical strategies that helped me see more clearly and achieve my goals. His accountability and guidance made all the difference.</p><span class="testi-badge">David L. — Hedge Fund Manager</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Thank you again for our life coaching sessions! You helped me visualize exactly what I wanted from this crazy life and put it all into action. The clarity I gained was something I didn't know I was missing.</p><span class="testi-badge">Harrison Forman — Co-Founder, UpDating</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Yoni helped me break through paralysis and take consistent daily action. Within a week, I closed nearly $9,000 in sales. His coaching created real momentum in my business — I finally stopped waiting and started moving.</p><span class="testi-badge">Greer T. — Small Business Owner</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Over six months of working with Yoni, I experienced real transformation — from powerful mindset shifts to practical strategies that helped me see more clearly and achieve my goals. His accountability and guidance made all the difference.</p><span class="testi-badge">David L. — Hedge Fund Manager</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Thank you again for our life coaching sessions! You helped me visualize exactly what I wanted from this crazy life and put it all into action. The clarity I gained was something I didn't know I was missing.</p><span class="testi-badge">Harrison Forman — Co-Founder, UpDating</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Yoni helped me break through paralysis and take consistent daily action. Within a week, I closed nearly $9,000 in sales. His coaching created real momentum in my business — I finally stopped waiting and started moving.</p><span class="testi-badge">Greer T. — Small Business Owner</span></div>
+        </div>
+      </div>
+
+      <div class="testi-col hidden lg:block">
+        <div class="testi-track col-c">
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">When I started working with Yoni, I was skeptical — four months later I can say it was one of the best decisions I've made. The progress in my relationships, balance, and personal growth has been remarkable. Worth every penny.</p><span class="testi-badge">Aaron B. — Tech Entrepreneur</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Yoni is a compassionate coach who never lets his compassion overrule his honesty. He holds you accountable to growing and transforming in a sustained, long-term way. Those months working with him were genuinely life-changing.</p><span class="testi-badge">Nicole F. — Professor, NYU</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Real transformation — from powerful mindset shifts to practical strategies that helped me see more clearly and achieve my goals. Yoni's accountability and guidance made all the difference over our six months together.</p><span class="testi-badge">David L. — Hedge Fund Manager</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">When I started working with Yoni, I was skeptical — four months later I can say it was one of the best decisions I've made. The progress in my relationships, balance, and personal growth has been remarkable. Worth every penny.</p><span class="testi-badge">Aaron B. — Tech Entrepreneur</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Yoni is a compassionate coach who never lets his compassion overrule his honesty. He holds you accountable to growing and transforming in a sustained, long-term way. Those months working with him were genuinely life-changing.</p><span class="testi-badge">Nicole F. — Professor, NYU</span></div>
+          <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">Real transformation — from powerful mindset shifts to practical strategies that helped me see more clearly and achieve my goals. Yoni's accountability and guidance made all the difference over our six months together.</p><span class="testi-badge">David L. — Hedge Fund Manager</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- CTA BANNER -->
+  <section class="py-28 reveal" style="background:#C4572A;">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <p style="color:rgba(255,255,255,0.4); font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; font-family:'Inter',sans-serif; margin-bottom:16px;">Ready to Begin?</p>
+      <div style="width:40px; height:1px; background:rgba(255,255,255,0.25); margin:0 auto 28px;"></div>
+      <h2 class="font-semibold text-white mb-6 leading-tight" style="font-family:'Cormorant Garamond',serif; font-size:clamp(2.2rem,5vw,3.5rem);">Ready to Dissolve Fear<br/>and Step Into Your Power?</h2>
+      <p style="color:rgba(255,255,255,0.65); font-size:0.95rem; line-height:1.7; max-width:440px; margin:0 auto 40px;">The first conversation is free. Let's discover what's possible when you stop managing your life and start leading it.</p>
+      <a href="#contact" style="background:#fff; color:#C4572A; font-weight:700; padding:13px 32px; border-radius:4px; font-size:13px; display:inline-block; text-decoration:none; font-family:'Inter',sans-serif; letter-spacing:0.04em; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Book a Discovery Call &rarr;</a>
+    </div>
+  </section>
+
+
+  <!-- CONTACT -->
+  <section class="py-24 reveal" id="contact" style="background:#F2EBE0;">
+    <div class="max-w-lg mx-auto px-6 text-center">
+      <p class="eyebrow mb-4">Get In Touch</p>
+      <div class="divider mb-6"></div>
+      <h2 class="font-semibold text-charcoal mb-4" style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,2.8rem);">Book a Free Discovery Call</h2>
+      <p class="text-sm mb-10" style="color:#7A6155;">Tell me a little about where you're at — I'll reach out within 24 hours to schedule a time to talk.</p>
+      <form class="space-y-4 text-left" onsubmit="return false;">
+        <input type="text" placeholder="Your Name" class="w-full bg-white rounded-lg px-4 py-3 text-charcoal text-sm focus:outline-none" style="border:1px solid rgba(74,53,37,0.12);" onfocus="this.style.borderColor='rgba(196,87,42,0.45)'" onblur="this.style.borderColor='rgba(74,53,37,0.12)'" />
+        <input type="email" placeholder="Your Email" class="w-full bg-white rounded-lg px-4 py-3 text-charcoal text-sm focus:outline-none" style="border:1px solid rgba(74,53,37,0.12);" onfocus="this.style.borderColor='rgba(196,87,42,0.45)'" onblur="this.style.borderColor='rgba(74,53,37,0.12)'" />
+        <select class="w-full bg-white rounded-lg px-4 py-3 text-sm focus:outline-none cursor-pointer" style="border:1px solid rgba(74,53,37,0.12); color:#7A6155;" onfocus="this.style.borderColor='rgba(196,87,42,0.45)'" onblur="this.style.borderColor='rgba(74,53,37,0.12)'">
+          <option value="" disabled selected>What are you interested in?</option>
+          <option>1:1 Executive Coaching</option>
+          <option>MANifest Group Program</option>
+          <option>Keynote Speaking</option>
+          <option>Not sure yet</option>
+        </select>
+        <textarea rows="4" placeholder="Tell me a bit about what you're working through…" class="w-full bg-white rounded-lg px-4 py-3 text-charcoal text-sm focus:outline-none resize-none" style="border:1px solid rgba(74,53,37,0.12);" onfocus="this.style.borderColor='rgba(196,87,42,0.45)'" onblur="this.style.borderColor='rgba(74,53,37,0.12)'"></textarea>
+        <button type="submit" class="terra-btn w-full text-center text-sm py-3" style="border:none;cursor:pointer;">Send Message &rarr;</button>
+      </form>
+      <p class="text-sm mt-6" style="color:rgba(122,97,85,0.5);">Or reach out directly: <a href="mailto:yonispinka@gmail.com" style="color:#C4572A;">yonispinka@gmail.com</a> &nbsp;&middot;&nbsp; <a href="tel:4846845999" style="color:#C4572A;">484-684-5999</a></p>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="py-12" style="background:#4A3525; border-top:1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded flex items-center justify-center font-black text-white text-xs" style="background:#C4572A; letter-spacing:0.08em; font-family:'Inter',sans-serif;">YS</div>
+          <div>
+            <div class="font-semibold text-white text-lg leading-tight" style="font-family:'Cormorant Garamond',serif;">Yoni Spinka</div>
+            <div class="text-xs" style="color:rgba(255,255,255,0.4);">Executive Performance Coach</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-6 text-sm" style="color:rgba(255,255,255,0.45);">
+          <a href="#about"        class="hover:text-white transition-colors">About</a>
+          <a href="#services"     class="hover:text-white transition-colors">Services</a>
+          <a href="#testimonials" class="hover:text-white transition-colors">Stories</a>
+          <a href="#contact"      class="hover:text-white transition-colors">Contact</a>
+        </div>
+        <a href="#contact" class="terra-btn text-sm py-2.5 px-6">Book a Call</a>
+      </div>
+      <div class="pt-6 flex flex-col md:flex-row justify-between items-start gap-3" style="border-top:1px solid rgba(255,255,255,0.08);">
+        <p class="italic" style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:rgba(255,255,255,0.3);">"Dissolve Fear. Be in your Power."</p>
+        <div style="color:rgba(255,255,255,0.25); font-size:0.75rem; text-align:right;">
+          <p>&copy; 2026 Spinka Group Coaching &amp; Consulting. All Rights Reserved.</p>
+          <p class="mt-1"><a href="mailto:yonispinka@gmail.com" style="color:inherit;">yonispinka@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- MODAL -->
+  <div id="cardModal" role="dialog" aria-modal="true">
+    <div id="cardModalBackdrop" onclick="closeCardModal()"></div>
+    <div id="cardModalBox">
+      <button class="card-modal-close" onclick="closeCardModal()" aria-label="Close">&#x2715;</button>
+      <div id="cardModalInner"></div>
+    </div>
+  </div>
+
+
+  <!-- JAVASCRIPT -->
+  <script>
+    /* Rotating word */
+    (function () {
+      var phrases = ['Clarity', 'Confidence', 'Purpose', 'Balance', 'Power', 'Intention', 'Freedom'];
+      var el = document.getElementById('rotatingWord');
+      var i = 0;
+      function next() {
+        el.classList.remove('entering'); el.classList.add('exiting');
+        setTimeout(function () {
+          i = (i + 1) % phrases.length;
+          el.textContent = phrases[i];
+          el.classList.remove('exiting'); el.classList.add('entering');
+        }, 390);
+      }
+      setInterval(next, 2700);
+    })();
+
+    /* Nav shadow */
+    (function () {
+      var nav = document.getElementById('mainNav');
+      window.addEventListener('scroll', function () {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+      }, { passive: true });
+    })();
+
+    /* Scroll reveal */
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!window.IntersectionObserver) { els.forEach(function (e) { e.classList.add('visible'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+
+    /* Card modal data */
+    var cardData = {
+      svc1: {
+        eyebrow: '1:1 Executive Coaching',
+        title: 'Executive Performance Coaching',
+        intro: 'Private coaching for leaders ready to dissolve fear, reclaim their power, and build a life that feels as good as it looks. Deep work. Real results. Free discovery call to start.',
+        items: [
+          { label: 'Clarity &amp; Decision-Making',      body: 'Cut through the noise and lead with confidence — no more waiting for permission from yourself.' },
+          { label: 'Work-Life Integration',            body: 'Stop sacrificing your family and health for your career. Both can thrive — with the right framework.' },
+          { label: 'Emotional Intelligence',           body: 'Understand your triggers, manage your reactions, and show up as the leader your team deserves.' },
+          { label: 'Mindset &amp; Inner Work',           body: 'Using IFS and trauma-informed methods to dissolve the internal patterns holding you back.' },
+          { label: 'Accountability &amp; Momentum',      body: 'Real progress between sessions — not just insights in a room, but change in your daily life.' },
+        ],
+        cta: { text: 'Book a Free Discovery Call', href: '#contact' },
+      },
+      svc2: {
+        eyebrow: 'Signature Group Program',
+        title: 'MANifest',
+        intro: 'An 8-week group coaching program for married men ready to own the solution — not the problem. In their marriage, their business, and within themselves.',
+        items: [
+          { label: 'Understand Yourself at a New Level',  body: 'Discover the internal dynamics driving your behavior — and learn to work with them, not against yourself.' },
+          { label: 'Assert Your Needs Without Guilt',     body: 'Learn to prioritize your own wellbeing without becoming selfish — the missing skill for most high-achievers.' },
+          { label: 'Manage Your Triggers',                body: 'Practical tools for staying grounded when stress, conflict, and pressure push your buttons.' },
+          { label: 'Build Real Confidence',               body: 'Not the performative kind — the quiet kind that doesn\'t need external validation.' },
+          { label: 'Bring Back the Bliss',                body: '"Enjoy life with the wife you love." Rebuild passion, presence, and partnership in your marriage.' },
+        ],
+        cta: { text: 'Apply for MANifest', href: '#contact' },
+      },
+      svc3: {
+        eyebrow: 'Keynote Speaking',
+        title: 'Speaking Engagements',
+        intro: 'Yoni delivers keynote talks and workshops for organizations — weaving timeless wisdom, modern psychology, and real-world coaching into experiences that actually move people.',
+        items: [
+          { label: 'Leadership &amp; Performance',          body: 'How high-achievers dissolve fear, lead with clarity, and sustain peak performance over the long term.' },
+          { label: 'Emotional Intelligence in Business',  body: 'The skills most MBA programs skip — and why they determine who really wins at the highest levels.' },
+          { label: 'Work-Life Integration',               body: 'Not balance (a myth) — integration. How to be fully present in every domain of life.' },
+          { label: 'The Wisdom Advantage',                body: 'Ancient principles from Jewish thought applied to modern leadership, decision-making, and resilience.' },
+          { label: 'Custom Workshop Formats',             body: 'Yoni tailors each engagement to the specific audience, industry, and goals of your organization.' },
+        ],
+        cta: { text: 'Inquire About Speaking', href: '#contact' },
+      },
+    };
+
+    function openCardModal(id) {
+      var d = cardData[id]; if (!d) return;
+      var chk = '<svg style="width:14px;height:14px;flex-shrink:0;margin-top:3px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>';
+      var items = d.items.map(function (x) {
+        return '<div class="modal-check-item"><span style="color:#C4572A">' + chk + '</span><div>'
+          + '<div style="font-weight:600;font-size:13px;color:#1C1C1C;margin-bottom:3px;">' + x.label + '</div>'
+          + '<div style="font-size:13px;color:#7A6155;line-height:1.6;">' + x.body + '</div>'
+          + '</div></div>';
+      }).join('');
+      document.getElementById('cardModalInner').innerHTML =
+        '<p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#C4572A;margin-bottom:10px;">' + d.eyebrow + '</p>'
+        + '<h3 style="font-family:\'Cormorant Garamond\',serif;font-size:2rem;font-weight:600;color:#1C1C1C;margin-bottom:12px;line-height:1.15;">' + d.title + '</h3>'
+        + '<p style="font-size:14px;color:#7A6155;line-height:1.65;margin-bottom:24px;">' + d.intro + '</p>'
+        + '<div style="margin-bottom:28px;">' + items + '</div>'
+        + '<a href="' + d.cta.href + '" onclick="closeCardModal()" style="display:inline-block;background:#C4572A;color:#fff;font-weight:600;padding:12px 26px;border-radius:4px;font-size:13px;text-decoration:none;font-family:\'Inter\',sans-serif;letter-spacing:0.04em;">' + d.cta.text + ' &rarr;</a>';
+      var modal = document.getElementById('cardModal');
+      modal.classList.remove('closing'); modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleEsc);
+    }
+
+    function closeCardModal() {
+      var modal = document.getElementById('cardModal');
+      modal.classList.add('closing');
+      setTimeout(function () { modal.classList.remove('open', 'closing'); document.body.style.overflow = ''; }, 260);
+      document.removeEventListener('keydown', handleEsc);
+    }
+
+    function handleEsc(e) { if (e.key === 'Escape') closeCardModal(); }
+  </script>
+
+</body>
+</html>
